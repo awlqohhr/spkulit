@@ -38,13 +38,13 @@ class PenyakitController extends Controller
 
     public function edit($id)
     {
-        $penyakit = Penyakit::find($id);
+        $penyakits = Penyakit::find($id);
     
-        if (!$penyakit) {
+        if (!$penyakits) {
             return redirect()->route('penyakit')->with('error', 'Data penyakit tidak ditemukan.');
         }
     
-        return view('penyakit.edit', compact('penyakit'));
+        return view('penyakit.edit', compact('penyakits'));
     }
     
     
@@ -58,29 +58,29 @@ class PenyakitController extends Controller
             'nama_penyakit' => 'required|string',
         ]);
 
-        $penyakit = Penyakit::find($id);
+        $penyakits = Penyakit::find($id);
 
-        if (!$penyakit) {
+        if (!$penyakits) {
             return redirect()->route('penyakit')->with('error', 'Data penyakit tidak ditemukan.');
         }
 
-        $penyakit->kode_penyakit = $request->kode_penyakit;
-        $penyakit->nama_penyakit = $request->nama_penyakit;
+        $penyakits->kode_penyakit = $request->kode_penyakit;
+        $penyakits->nama_penyakit = $request->nama_penyakit;
 
         if ($request->hasFile('gambar')) {
-            // Delete old image if it exists
-            if ($penyakit->gambar) {
-                unlink(public_path('images/penyakit/' . $penyakit->gambar));
+            // Delete old image if it existss
+            if ($penyakits->gambar) {
+                unlink(public_path('images/penyakit/' . $penyakits->gambar));
             }
 
             $image = $request->file('gambar');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('images/penyakit'), $imageName);
 
-            $penyakit->gambar = $imageName;
+            $penyakits->gambar = $imageName;
         }
 
-        $penyakit->save();
+        $penyakits->save();
 
         return redirect()->route('penyakit')->with('success', 'Data penyakit berhasil diperbarui.');
     }
