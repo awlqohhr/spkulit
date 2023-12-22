@@ -82,103 +82,103 @@
                     <!-- /.card-header -->
                     <div class="card-body">
                         <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                            <table class="table align-middle mb-0 bg-white">
-                                <thead class="bg-light">
-                                    <tr>
-                                        <th style="width: 10px">No</th>
-                                        <th style="width: 10px">Kode</th>
-                                        <th>Gambar</th>
-                                        <th>Nama</th>
-                                        <th style="width: 20px">Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($penyakits as $no => $penyakit)
-                                        <!-- Konten tabel -->
+                            <div class="table-responsive">
+                                <table class="table align-middle mb-0 bg-white">
+                                    <thead class="bg-light">
                                         <tr>
-                                            <td>{{ $no + 1 }}</td>
-                                            <td>{{ $penyakit->kode_penyakit }}</td>
-                                            <td><img src="{{ asset('images/penyakit/' . $penyakit->gambar) }}"
-                                                    alt="{{ $penyakit->nama_penyakit }}" width="100" height="100"></td>
-                                            <td>{{ $penyakit->nama_penyakit }}</td>
-                                            <td class="text-center">
-                                                <div>
-                                                    <form action="{{ route('penyakit.edit', $penyakit->id) }}"
-                                                        method="POST">
-                                                        @csrf
-                                                        @method('UPDATE')
-                                                        <button type="button" class="btn btn-info" data-bs-toggle="modal"
-                                                            data-bs-target="#updatePenyakit">Edit</button>
-                                                    </form>
-                                                </div>
-                                                <div class="pt-2">
-                                                    <form action="{{ route('penyakit.delete', $penyakit->id) }}"
-                                                        method="POST">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button class="btn btn-danger"
-                                                            onclick="hapusPenyakit('{{ $penyakit->id }}')">Hapus</button>
-                                                    </form>
-                                                </div>
-
-                                            </td>
+                                            <th style="width: 10px">No</th>
+                                            <th style="width: 10px">Kode</th>
+                                            <th>Gambar</th>
+                                            <th>Nama</th>
+                                            <th style="width: 20px">Aksi</th>
                                         </tr>
-                                    @endforeach
-
-                                </tbody>
-
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($penyakits as $no => $penyakit)
+                                            <!-- Konten tabel -->
+                                            <tr>
+                                                <td>{{ $no + 1 }}</td>
+                                                <td>{{ $penyakit->kode_penyakit }}</td>
+                                                <td><img src="{{ asset('images/penyakit/' . $penyakit->gambar) }}"
+                                                        alt="{{ $penyakit->nama_penyakit }}" width="100" height="100">
+                                                </td>
+                                                <td>{{ $penyakit->nama_penyakit }}</td>
+                                                <td class="text-center">
+                                                    <div>
+                                                        <form action="{{ route('penyakit.edit', $penyakit->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('UPDATE')
+                                                            <button type="button" class="btn btn-info"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#updatePenyakit">Edit</button>
+                                                        </form>
+                                                    </div>
+                                                    <div class="pt-2">
+                                                        <form action="{{ route('penyakit.delete', $penyakit->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button class="btn btn-danger"
+                                                                onclick="hapusPenyakit('{{ $penyakit->id }}')">Hapus</button>
+                                                        </form>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                    </div>
-                    <!-- Modal Update -->
-                    <div class="modal fade " id="updatePenyakit" tabindex="-1" aria-labelledby="updatePenyakitLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="updatePenyakitLabel">Edit Data Penyakit</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body ">
-                                    <form action="{{ route('penyakit.update', $penyakit->id) }}" method="post"
-                                        enctype="multipart/form-data">
-                                        @csrf
-                                        @method('put')
+                        <!-- Modal Update -->
+                        <div class="modal fade " id="updatePenyakit" tabindex="-1" aria-labelledby="updatePenyakitLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="updatePenyakitLabel">Edit Data Penyakit</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body ">
+                                        <form action="{{ route('penyakit.update', $penyakit->id) }}" method="post"
+                                            enctype="multipart/form-data">
+                                            @csrf
+                                            @method('put')
 
-                                        <label for="kode_penyakit">Kode Penyakit:</label>
-                                        <input class="form-control" type="text" name="kode_penyakit"
-                                            value="{{ $penyakit->kode_penyakit }}" required>
-                                        <br>
-
-                                        <label for="gambar">Gambar:</label>
-                                        <input class="form-control" type="file" name="gambar">
-                                        <br>
-
-                                        @if ($penyakit->gambar)
-                                            <img src="{{ asset('images/penyakit/' . $penyakit->gambar) }}"
-                                                alt="Gambar Penyakit" height="150px" width="150px">
+                                            <label for="kode_penyakit">Kode Penyakit:</label>
+                                            <input class="form-control" type="text" name="kode_penyakit"
+                                                value="{{ $penyakit->kode_penyakit }}" required>
                                             <br>
-                                        @endif
 
-                                        <label for="nama_penyakit">Nama Penyakit:</label>
-                                        <input class="form-control" type="text" name="nama_penyakit"
-                                            value="{{ $penyakit->nama_penyakit }}" required>
-                                        <br>
+                                            <label for="gambar">Gambar:</label>
+                                            <input class="form-control" type="file" name="gambar">
+                                            <br>
 
-                                        <div class="modal-footer">
-                                            <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-                                        </div>
-                                    </form>
+                                            @if ($penyakit->gambar)
+                                                <img src="{{ asset('images/penyakit/' . $penyakit->gambar) }}"
+                                                    alt="Gambar Penyakit" height="150px" width="150px">
+                                                <br>
+                                            @endif
+
+                                            <label for="nama_penyakit">Nama Penyakit:</label>
+                                            <input class="form-control" type="text" name="nama_penyakit"
+                                                value="{{ $penyakit->nama_penyakit }}" required>
+                                            <br>
+
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <!-- /.card-body -->
+
+
                     </div>
-                    <!-- /.card-body -->
-
-
-                </div>
-            </div><!-- /.container-fluid -->
+                </div><!-- /.container-fluid -->
         </section>
         <!-- /.content -->
     </div>

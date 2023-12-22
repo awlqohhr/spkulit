@@ -1,0 +1,58 @@
+/* File: public/css/styles.css */
+
+/* Gaya umum */
+body {
+    font-family: 'Arial', sans-serif;
+}
+
+/* Media queries untuk perangkat dengan lebar layar kurang dari atau sama dengan 768px (misalnya, tablet dan ponsel) */
+@media (max-width: 768px) {
+    body {
+        font-size: 14px; /* Mengubah ukuran font untuk perangkat berukuran kecil */
+    }
+
+    /* Tambahkan aturan CSS tambahan sesuai kebutuhan untuk perangkat berukuran kecil */
+}
+
+/* Media queries untuk perangkat dengan lebar layar antara 769px dan 992px (misalnya, tablet) */
+@media (min-width: 769px) and (max-width: 992px) {
+    /* Tambahkan aturan CSS sesuai kebutuhan untuk perangkat berukuran menengah */
+}
+
+/* Media queries untuk perangkat dengan lebar layar lebih dari 992px (misalnya, desktop) */
+@media (min-width: 993px) {
+    /* Tambahkan aturan CSS sesuai kebutuhan untuk perangkat berukuran besar */
+}
+
+
+/* Gaya umum */
+body {
+    font-family: 'Arial', sans-serif;
+    font-size: 16px; /* Ukuran font dasar untuk semua perangkat */
+}
+
+/* Tabel umum styling */
+.table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
+}
+
+/* Tambahkan padding pada seluruh cell di dalam tabel untuk memberikan ruang */
+.table td,
+.table th {
+    padding: 0.75rem;
+}
+
+/* Card body styling */
+.card-body {
+    padding: 1.25rem; /* Sesuaikan padding sesuai kebutuhan */
+}
+
+/* Media queries untuk perangkat dengan lebar layar kurang dari atau sama dengan 768px (misalnya, tablet dan ponsel) */
+@media (max-width: 768px) {
+    /* Tambahkan aturan CSS tambahan untuk mengatasi overflow pada card body di dalam tabel */
+    .table-responsive {
+        overflow-x: auto;
+    }
+}
