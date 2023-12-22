@@ -143,7 +143,6 @@
                                 <div class="modal-body ">
                                     <form action="{{ route('penyakit.update', $penyakit->id) }}" method="post"
                                         enctype="multipart/form-data">
-
                                         @csrf
                                         @method('put')
 
