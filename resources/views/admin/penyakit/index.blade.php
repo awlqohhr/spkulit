@@ -33,26 +33,68 @@
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
+                                    <div class="container">
+                                        <h2>Tambah Penyakit</h2>
+
+                                        <!-- Your create form goes here -->
+                                        <form action="{{ route('penyakit.store') }}" method="POST"
+                                            enctype="multipart/form-data">
+                                            @csrf
+
+                                            <!-- Form fields go here -->
+
+                                            <div class="form-group">
+                                                <label for="kode_penyakit">Kode Penyakit:</label>
+                                                <input type="text" name="kode_penyakit" class="form-control" required>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="gambar">Gambar:</label>
+                                                <input type="file" name="gambar" class="form-control-file">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="nama_penyakit">Nama Penyakit:</label>
+                                                <input type="text" name="nama_penyakit" class="form-control" required>
+                                            </div>
 
 
-                                    <form action="{{ route('penyakit.store') }}" method="post"
-                                        enctype="multipart/form-data">
-                                        @csrf
-                                        <label for="kode_penyakit" class="pt-2">Kode Penyakit:</label>
-                                        <input class="form-control" type="text" name="kode_penyakit" required>
 
-                                        <label for="gambar" class="pt-2">Gambar:</label>
-                                        <input class="form-control" type="file" name="gambar" accept="image/*" required>
+                                            <button type="submit" class="btn btn-primary">Simpan</button>
+                                        </form>
 
-                                        <label for="nama_penyakit" class="pt-2">Nama Penyakit:</label>
-                                        <input class="form-control" type="text" name="nama_penyakit" required>
-
-                                        <div class="modal-footer">
-                                            <button type="submit" class="btn btn-primary">Tambah Data Penyakit</button>
+                                        <!-- Bootstrap Modal for Create -->
+                                        <div class="modal fade" id="createModal" tabindex="-1" role="dialog"
+                                            aria-labelledby="createModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="createModalLabel">Sukses</h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Data penyakit berhasil ditambahkan!
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">Tutup</button>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
+                                    </div>
 
-                                    </form>
-
+                                    <!-- Script to show the Bootstrap modal on successful form submission -->
+                                    @if (session('success'))
+                                        <script>
+                                            $(document).ready(function() {
+                                                $('#createModal').modal('show');
+                                            });
+                                        </script>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -94,45 +136,63 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($penyakits as $no => $penyakit)
-                                            <!-- Konten tabel -->
+                                        @foreach ($penyakits as $penyakit)
                                             <tr>
-                                                <td>{{ $no + 1 }}</td>
+                                                <td>{{ $no + 1 }} </td>
                                                 <td>{{ $penyakit->kode_penyakit }}</td>
-                                                <td><img src="{{ asset('images/penyakit/' . $penyakit->gambar) }}"
-                                                        alt="{{ $penyakit->nama_penyakit }}" width="100" height="100">
-                                                </td>
                                                 <td>{{ $penyakit->nama_penyakit }}</td>
-                                                <td class="text-center">
-                                                    <div>
-                                                        <form action="{{ route('penyakit.edit', $penyakit->id) }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            @method('UPDATE')
-                                                            <button type="button" class="btn btn-info"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#updatePenyakit">Edit</button>
-                                                        </form>
-                                                    </div>
-                                                    <div class="pt-2">
-                                                        <form action="{{ route('penyakit.delete', $penyakit->id) }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button class="btn btn-danger"
-                                                                onclick="hapusPenyakit('{{ $penyakit->id }}')">Hapus</button>
-                                                        </form>
-                                                    </div>
+                                                <td>
+                                                    <img src="{{ asset('images/penyakit/' . $penyakit->gambar) }}"
+                                                        alt="{{ $penyakit->nama_penyakit }}" height="50">
+                                                </td>
+                                                <td>
+                                                    <a href="{{ route('penyakit.edit', $penyakit->id) }}"
+                                                        class="btn btn-primary">Edit</a>
+                                                    <button class="btn btn-danger" data-toggle="modal"
+                                                        data-target="#deleteModal{{ $penyakit->id }}">Hapus</button>
                                                 </td>
                                             </tr>
+
+                                            <!-- Delete Modal -->
+                                            <div class="modal fade" id="deleteModal{{ $penyakit->id }}" tabindex="-1"
+                                                role="dialog" aria-labelledby="deleteModalLabel{{ $penyakit->id }}"
+                                                aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title"
+                                                                id="deleteModalLabel{{ $penyakit->id }}">Konfirmasi Hapus
+                                                            </h5>
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            Apakah Anda yakin ingin menghapus data penyakit ini?
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-dismiss="modal">Tutup</button>
+                                                            <form action="{{ route('penyakit.destroy', $penyakit->id) }}"
+                                                                method="POST">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit"
+                                                                    class="btn btn-danger">Hapus</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         @endforeach
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                         <!-- Modal Update -->
-                        <div class="modal fade " id="updatePenyakit" tabindex="-1" aria-labelledby="updatePenyakitLabel"
-                            aria-hidden="true">
+                        <div class="modal fade " id="updatePenyakit" tabindex="-1"
+                            aria-labelledby="updatePenyakitLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -141,35 +201,7 @@
                                             aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body ">
-                                        <form action="{{ route('penyakit.update', $penyakit->id) }}" method="post"
-                                            enctype="multipart/form-data">
-                                            @csrf
-                                            @method('put')
 
-                                            <label for="kode_penyakit">Kode Penyakit:</label>
-                                            <input class="form-control" type="text" name="kode_penyakit"
-                                                value="{{ $penyakit->kode_penyakit }}" required>
-                                            <br>
-
-                                            <label for="gambar">Gambar:</label>
-                                            <input class="form-control" type="file" name="gambar">
-                                            <br>
-
-                                            @if ($penyakit->gambar)
-                                                <img src="{{ asset('images/penyakit/' . $penyakit->gambar) }}"
-                                                    alt="Gambar Penyakit" height="150px" width="150px">
-                                                <br>
-                                            @endif
-
-                                            <label for="nama_penyakit">Nama Penyakit:</label>
-                                            <input class="form-control" type="text" name="nama_penyakit"
-                                                value="{{ $penyakit->nama_penyakit }}" required>
-                                            <br>
-
-                                            <div class="modal-footer">
-                                                <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-                                            </div>
-                                        </form>
                                     </div>
                                 </div>
                             </div>

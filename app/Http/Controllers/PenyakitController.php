@@ -19,7 +19,7 @@ class PenyakitController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'kode_penyakit' => 'required|unique:penyakits',
+            'kode_penyakit' => 'required|unique:penyakit',
             'gambar' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'nama_penyakit' => 'required',
         ]);
@@ -40,14 +40,17 @@ class PenyakitController extends Controller
     {
         $penyakits = Penyakit::find($id);
     
+        // Check if $penyakits is not found
         if (!$penyakits) {
-            return redirect()->route('penyakit')->with('error', 'Data penyakit tidak ditemukan.');
+            // Handle the case where the record is not found
+            return redirect()->route('error.page')->with('error', 'Penyakit not found');
         }
     
-        return view('penyakit.edit', compact('penyakits'));
+        return view('penyakit', compact('penyakit'));
     }
     
-    
+
+
     
 
     public function update(Request $request, $id)
@@ -68,7 +71,7 @@ class PenyakitController extends Controller
         $penyakits->nama_penyakit = $request->nama_penyakit;
 
         if ($request->hasFile('gambar')) {
-            // Delete old image if it existss
+            // Delete old image if it exists
             if ($penyakits->gambar) {
                 unlink(public_path('images/penyakit/' . $penyakits->gambar));
             }
@@ -84,7 +87,6 @@ class PenyakitController extends Controller
 
         return redirect()->route('penyakit')->with('success', 'Data penyakit berhasil diperbarui.');
     }
-
 
 
     public function destroy($id)

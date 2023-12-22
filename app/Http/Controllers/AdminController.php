@@ -17,9 +17,9 @@ class AdminController extends Controller
     public function penyakit()
     {
         $penyakits = Penyakit::all();
-        // dd($penyakits);
         return view('admin.penyakit.index', compact('penyakits'));
     }
+    
     
 
 }
