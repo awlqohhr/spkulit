@@ -34,18 +34,22 @@ class AturanController extends Controller
         // Validasi dan simpan data baru
         $request->validate([
             'Kode_Gejala' => 'required|array',
-            'Kode_Gejala.*' => 'exists:gejalas,Kode_Gejala',
-            'Kode_Penyakit' => 'required|array',
+            // 'Kode_Gejala.*' => 'exists:gejalas,Kode_Gejala',
+            // 'Kode_Penyakit' => 'required|array',
             'Kode_Penyakit.*' => 'exists:penyakits,Kode_Penyakit',
             // ... tambahkan validasi sesuai kebutuhan
         ]);
 
-        // Gunakan metode create dengan mengirimkan array data
-        Aturan::create([
-            'Kode_Gejala' => $request->input('Kode_Gejala'),  // Assuming this is an array
-            'Kode_Penyakit' => $request->input('Kode_Penyakit'),  // Assuming this is an array
-            // ... tambahkan field sesuai kebutuhan
-        ]);
+        $gejalaCodes = $request->input('Kode_Gejala');
+        $penyakitCode = $request->input('Kode_Penyakit');
+
+        foreach ($gejalaCodes as $gejalaCode) {
+            Aturan::create([
+                'Kode_Gejala' => $gejalaCode,
+                'Kode_Penyakit' => $penyakitCode,
+                // ... tambahkan field sesuai kebutuhan
+            ]);
+        }
 
         return redirect()->route('aturan.index')->with('success', 'Aturan berhasil ditambahkan.');
     }
