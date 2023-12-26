@@ -23,7 +23,10 @@ class AturanController extends Controller
     public function create()
     {
         // Tampilkan form untuk membuat data baru
-        return view('create');
+        $penyakits = Penyakit::all();
+        $gejalas = Gejala::all();
+
+        return view('create', compact('penyakits', 'gejalas'));
     }
 
     public function store(Request $request)
@@ -31,21 +34,21 @@ class AturanController extends Controller
         // Validasi dan simpan data baru
         $request->validate([
             'Kode_Gejala' => 'required|array',
-            'Kode_Gejala.*' => 'exists:gejalas,Kode_Gejala', // pastikan nilai yang dikirim sesuai dengan gejalas yang valid
-            'Kode_Penyakit' => 'required|exists:penyakits,Kode_Penyakit', // pastikan nilai yang dikirim sesuai dengan penyakits yang valid
+            'Kode_Gejala.*' => 'exists:gejalas,Kode_Gejala',
+            'Kode_Penyakit' => 'required|array',
+            'Kode_Penyakit.*' => 'exists:penyakits,Kode_Penyakit',
             // ... tambahkan validasi sesuai kebutuhan
         ]);
 
         // Gunakan metode create dengan mengirimkan array data
         Aturan::create([
-            'Kode_Gejala' => [$request->input('Kode_Gejala')],
-            'Kode_Penyakit' => [$request->input('Kode_Penyakit')],
+            'Kode_Gejala' => $request->input('Kode_Gejala'),  // Assuming this is an array
+            'Kode_Penyakit' => $request->input('Kode_Penyakit'),  // Assuming this is an array
             // ... tambahkan field sesuai kebutuhan
         ]);
 
         return redirect()->route('aturan.index')->with('success', 'Aturan berhasil ditambahkan.');
     }
-
 
     public function show($id)
     {
