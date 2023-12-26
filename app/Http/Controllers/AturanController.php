@@ -29,32 +29,56 @@ class AturanController extends Controller
         return view('create', compact('penyakits', 'gejalas'));
     }
 
+    // public function store(Request $request)
+    // {
+    //     // Validasi dan simpan data baru
+    //     $request->validate([
+    //         'Kode_Gejala' => 'required|array',
+    //         // 'Kode_Gejala.*' => 'exists:gejalas,Kode_Gejala',
+    //         // 'Kode_Penyakit' => 'required|array',
+    //         'Kode_Penyakit.*' => 'exists:penyakits,Kode_Penyakit',
+    //         // ... tambahkan validasi sesuai kebutuhan
+    //     ]);
+
+    //     $gejalaCodes = $request->input('Kode_Gejala');
+    //     $penyakitCode = $request->input('Kode_Penyakit');
+
+    //     foreach ($gejalaCodes as $gejalaCode) {
+    //         Aturan::create([
+    //             'Kode_Gejala' => $gejalaCode,
+    //             'Kode_Penyakit' => $penyakitCode,
+    //             // ... tambahkan field sesuai kebutuhan
+    //         ]);
+    //     }
+
+    //     return redirect()->route('aturan.index')->with('success', 'Aturan berhasil ditambahkan.');
+    // }
     public function store(Request $request)
     {
         // Validasi dan simpan data baru
         $request->validate([
             'Kode_Gejala' => 'required|array',
-            // 'Kode_Gejala.*' => 'exists:gejalas,Kode_Gejala',
-            // 'Kode_Penyakit' => 'required|array',
-            'Kode_Penyakit.*' => 'exists:penyakits,Kode_Penyakit',
+            'Kode_Penyakit' => 'required|exists:penyakits,Kode_Penyakit',
             // ... tambahkan validasi sesuai kebutuhan
         ]);
-
+    
         $gejalaCodes = $request->input('Kode_Gejala');
         $penyakitCode = $request->input('Kode_Penyakit');
-
-        foreach ($gejalaCodes as $gejalaCode) {
-            Aturan::create([
-                'Kode_Gejala' =>  implode(',', $request->input('Kode_Gejala')),
-                // 'Kode_Gejala' => $gejalaCode,
-                'Kode_Penyakit' => $penyakitCode,
-                // ... tambahkan field sesuai kebutuhan
-            ]);
-        }
-
+        
+        // Gabungkan nilai Kode_Gejala menjadi satu string (contoh: "G01,G02,G03")
+        $mergedGejalaCodes = implode(',', $gejalaCodes);
+        
+        // Simpan satu entri dengan nilai gabungan Kode_Gejala
+        Aturan::create([
+            'Kode_Gejala' => $mergedGejalaCodes,
+            'Kode_Penyakit' => $penyakitCode,
+            // ... tambahkan field sesuai kebutuhan
+        ]);
+    
         return redirect()->route('aturan.index')->with('success', 'Aturan berhasil ditambahkan.');
     }
-  
+    
+
     
     public function show($id)
     {
