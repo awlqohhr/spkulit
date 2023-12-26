@@ -110,8 +110,9 @@
                                                         <tbody>
                                                             @forelse($data as $aturan)
                                                                 <tr>
-                                                                    <td>{{ $aturan->field1 }}</td>
-                                                                    <td>{{ $aturan->field2 }}</td>
+                                                                    <td>{{ $loop->iteration }}</td>
+                                                                    <td>{{ $aturan->Kode_Gejala }}</td>
+                                                                    <td>{{ $aturan->Kode_Penyakit }}</td>
                                                                     <!-- Tambahkan kolom sesuai kebutuhan -->
                                                                     <td>
                                                                         <a href="{{ route('aturan.show', $aturan->id) }}"
