@@ -9,14 +9,12 @@ class CreateAturansTable extends Migration
     {
         Schema::create('aturans', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('Kode_Gejala');
-            $table->unsignedBigInteger('Kode_Penyakit');
+            $table->string('Kode_Gejala'); // Menggunakan tipe data yang sesuai
+            $table->string('Kode_Penyakit'); // Menggunakan tipe data yang sesuai
             $table->timestamps();
-        });
-
-        Schema::table('aturans', function (Blueprint $table) {
-            $table->foreign('Kode_Gejala')->references('id')->on('gejalas')->onDelete('cascade');
-            $table->foreign('Kode_Penyakit')->references('id')->on('penyakits')->onDelete('cascade');
+    
+            $table->foreign('Kode_Gejala')->references('Kode_Gejala')->on('gejalas')->onDelete('cascade');
+            $table->foreign('Kode_Penyakit')->references('Kode_Penyakit')->on('penyakits')->onDelete('cascade');
         });
     }
 
