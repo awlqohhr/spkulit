@@ -45,7 +45,8 @@ class AturanController extends Controller
 
         foreach ($gejalaCodes as $gejalaCode) {
             Aturan::create([
-                'Kode_Gejala' => $gejalaCode,
+                'Kode_Gejala' =>  implode(',', $request->input('Kode_Gejala')),
+                // 'Kode_Gejala' => $gejalaCode,
                 'Kode_Penyakit' => $penyakitCode,
                 // ... tambahkan field sesuai kebutuhan
             ]);
@@ -53,7 +54,8 @@ class AturanController extends Controller
 
         return redirect()->route('aturan.index')->with('success', 'Aturan berhasil ditambahkan.');
     }
-
+  
+    
     public function show($id)
     {
         $aturan = Aturan::findOrFail($id);
