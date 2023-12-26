@@ -1,7 +1,5 @@
 <?php
 
-// app/Models/Penyakit.php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,5 +9,11 @@ class Penyakit extends Model
 {
     use HasFactory;
     protected $table = 'penyakits';
-    protected $fillable = ['kode_penyakit', 'gambar', 'nama_penyakit'];
+    protected $fillable = ['Kode_Penyakit', 'Gambar_Penyakit', 'Nama_Penyakit', 'Deskripsi_Penyakit'];
+
+    // Assuming you have a pivot table named penyakit_gejala
+    public function gejalas()
+    {
+        return $this->belongsToMany(Gejala::class, 'penyakit_gejala', 'penyakit_id', 'gejala_id');
+    }
 }

@@ -19,200 +19,294 @@
                 </div><!-- /.row -->
                 {{-- button modal --}}
                 <div class="pt-3">
-                    <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#exampleModal">Tambah
-                        Data<i class="bi bi-plus-square pl-3"></i></button>
-                    <!-- resources/views/penyakit/create.blade.php -->
-                    <!-- Modal Create -->
-                    <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Data Penyakit</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="container">
-                                        <h2>Tambah Penyakit</h2>
+                    <section class="content">
+                        <div class="container-fluid">
+                            <div>
+                                @if (session('success'))
+                                    <div class="alert alert-success" style="color: green;">
+                                        {{ session('success') }}</div>
+                                @endif
 
-                                        <!-- Your create form goes here -->
-                                        <form action="{{ route('penyakit.store') }}" method="POST"
-                                            enctype="multipart/form-data">
-                                            @csrf
+                                @if (session('error'))
+                                    <div class="alert alert-danger" style="color: red;">{{ session('error') }}
+                                    </div>
+                                @endif
+                            </div>
+                            <!-- Modal Create -->
+                            <div class="pb-2">
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#createModal">
+                                    Tambah Data <i class="bi bi-plus-circle-fill pl-2"></i>
+                                </button>
 
-                                            <!-- Form fields go here -->
-
-                                            <div class="form-group">
-                                                <label for="kode_penyakit">Kode Penyakit:</label>
-                                                <input type="text" name="kode_penyakit" class="form-control" required>
+                                <!-- Modal -->
+                                <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="createModalLabel">Tambah Data Penyakit</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
                                             </div>
+                                            <div class="modal-body">
+                                                <form action="{{ route('penyakit.store') }}" method="POST"
+                                                    enctype="multipart/form-data">
+                                                    @csrf
 
-                                            <div class="form-group">
-                                                <label for="gambar">Gambar:</label>
-                                                <input type="file" name="gambar" class="form-control-file">
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="nama_penyakit">Nama Penyakit:</label>
-                                                <input type="text" name="nama_penyakit" class="form-control" required>
-                                            </div>
-
-
-
-                                            <button type="submit" class="btn btn-primary">Simpan</button>
-                                        </form>
-
-                                        <!-- Bootstrap Modal for Create -->
-                                        <div class="modal fade" id="createModal" tabindex="-1" role="dialog"
-                                            aria-labelledby="createModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="createModalLabel">Sukses</h5>
-                                                        <button type="button" class="close" data-dismiss="modal"
-                                                            aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
+                                                    <div class="form-group">
+                                                        <label for="Kode_Penyakit">Kode Penyakit</label>
+                                                        <input type="text" class="form-control" id="Kode_Penyakit"
+                                                            name="Kode_Penyakit" required>
                                                     </div>
-                                                    <div class="modal-body">
-                                                        Data penyakit berhasil ditambahkan!
+
+                                                    <div class="form-group">
+                                                        <label for="Gambar_Penyakit">Gambar Penyakit</label>
+                                                        <input type="file" class="form-control" id="Gambar_Penyakit"
+                                                            name="Gambar_Penyakit" onchange="previewImage(this)">
+                                                        <div class="text-center mt-2">
+                                                            <img id="image-preview" class="img-fluid rounded" src="#"
+                                                                alt="Preview" style="display:none; max-width: 300px">
+                                                        </div>
+                                                    </div>
+                                                    <script>
+                                                        function previewImage(input) {
+                                                            var preview = document.getElementById('image-preview');
+                                                            var file = input.files[0];
+                                                            var reader = new FileReader();
+
+                                                            reader.onloadend = function() {
+                                                                preview.src = reader.result;
+                                                                preview.style.display = 'block';
+                                                            };
+
+                                                            if (file) {
+                                                                reader.readAsDataURL(file);
+                                                            } else {
+                                                                preview.src = '';
+                                                                preview.style.display = 'none';
+                                                            }
+                                                        }
+                                                    </script>
+
+                                                    <div class="form-group">
+                                                        <label for="Nama_Penyakit">Nama Penyakit</label>
+                                                        <input type="text" class="form-control" id="Nama_Penyakit"
+                                                            name="Nama_Penyakit" required>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="Deskripsi_Penyakit">Deskripsi
+                                                            Penyakit</label>
+                                                        <textarea class="form-control" id="Deskripsi_Penyakit" name="Deskripsi_Penyakit" rows="4" required></textarea>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary"
-                                                            data-dismiss="modal">Tutup</button>
+                                                            data-bs-dismiss="modal">Batal</button>
+                                                        <button type="submit" class="btn btn-primary">Simpan</button>
                                                     </div>
-                                                </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
-
-                                    <!-- Script to show the Bootstrap modal on successful form submission -->
-                                    @if (session('success'))
-                                        <script>
-                                            $(document).ready(function() {
-                                                $('#createModal').modal('show');
-                                            });
-                                        </script>
-                                    @endif
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div><!-- /.container-fluid -->
+                            <div class="card">
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    <div id="data_penyakit">
+                                        <div class="table-responsive">
+                                            <table id="tabelpenyakit" class="table table-bordered compact stripe"
+                                                style="auto">
+                                                <thead>
+                                                    <tr>
+                                                        <th data-field="no" style="width: 3%">No.</th>
+                                                        <th data-field="kode_penyakit" style="width: 10%">Kode Penyakit</th>
+                                                        <th data-field="gambar">Gambar Penyakit</th>
+                                                        <th data-field="nama_penyakit">Nama Penyakit</th>
+                                                        <th data-field="deskirpsi_penyakit">Deskripsi Penyakit</th>
+                                                        <th data-field="aksi" style="width: 10%">Aksi</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($penyakits as $no => $penyakit)
+                                                        <tr>
+                                                            <td>{{ $no + 1 }}</td>
+                                                            <td>{{ $penyakit->Kode_Penyakit }}</td>
+                                                            <td>
+                                                                @if ($penyakit->Gambar_Penyakit)
+                                                                    <img src="{{ asset('storage/' . $penyakit->Gambar_Penyakit) }}"
+                                                                        alt="Gambar Penyakit" style="max-width: 100px;">
+                                                                @else
+                                                                    No Image
+                                                                @endif
+                                                            <td>{{ $penyakit->Nama_Penyakit }}</td>
+                                                            <td>{{ $penyakit->Deskripsi_Penyakit }}</td>
+                                                            <td class="text-center">
+                                                                <div class="row">
+                                                                    <div class="pt-2 col"> <button type="button"
+                                                                            class="btn btn-warning" data-bs-toggle="modal"
+                                                                            data-bs-target="#editModal{{ $penyakit->id }}">
+                                                                            <i class="bi bi-pencil-square"></i>
+                                                                        </button></div>
+                                                                    <div class="pt-2 col"> <button type="button"
+                                                                            class="btn btn-danger" data-bs-toggle="modal"
+                                                                            data-bs-target="#deleteModal{{ $penyakit->id }}">
+                                                                            <i class="bi bi-trash2-fill"></i>
+                                                                        </button></div>
+                                                                </div>
 
+                                                            </td>
+                                                        </tr>
+
+                                                        <!-- Edit Modal -->
+                                                        @foreach ($penyakits as $penyakit)
+                                                            <div class="modal fade" id="editModal{{ $penyakit->id }}"
+                                                                tabindex="-1"
+                                                                aria-labelledby="editModalLabel {{ $penyakit->id }}"
+                                                                aria-hidden="true">
+                                                                <div class="modal-dialog">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h1 class="modal-title fs-5"
+                                                                                id="editModalLabel {{ $penyakit->id }}">
+                                                                                Ubah Data Penyakit</h1>
+                                                                            <button type="button" class="btn-close"
+                                                                                data-bs-dismiss="modal"
+                                                                                aria-label="Close"></button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <form
+                                                                                action="{{ route('penyakit.update', ['id' => $penyakit->id]) }}"
+                                                                                enctype="multipart/form-data"
+                                                                                method="POST">
+                                                                                @csrf
+                                                                                @method('PUT')
+
+                                                                                <div class="form-group">
+                                                                                    <label for="Kode_Penyakit">Kode
+                                                                                        Penyakit</label>
+                                                                                    <input type="text"
+                                                                                        class="form-control"
+                                                                                        id="Kode_Penyakit"
+                                                                                        name="Kode_Penyakit"
+                                                                                        value="{{ $penyakit->Kode_Penyakit }}"
+                                                                                        required>
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label for="Gambar_Penyakit">Gambar
+                                                                                        Penyakit</label>
+                                                                                    <input type="file"
+                                                                                        class="form-control"
+                                                                                        id="Gambar_Penyakit"
+                                                                                        name="Gambar_Penyakit"
+                                                                                        onchange="previewImage(this)">
+                                                                                    <div class="text-center mt-2">
+                                                                                        <img id="image-preview"
+                                                                                            class="img-fluid rounded"
+                                                                                            src="{{ asset('storage/' . $penyakit->Gambar_Penyakit) }}"
+                                                                                            alt="Preview"
+                                                                                            style="max-width: 300px;">
+                                                                                    </div>
+                                                                                </div>
+                                                                                <script>
+                                                                                    function previewImage(input) {
+                                                                                        var preview = document.getElementById('image-preview');
+                                                                                        var file = input.files[0];
+                                                                                        var reader = new FileReader();
+
+                                                                                        reader.onload = function(e) {
+                                                                                            preview.src = e.target.result;
+                                                                                        };
+
+                                                                                        if (file) {
+                                                                                            reader.readAsDataURL(file);
+                                                                                        }
+                                                                                    }
+                                                                                </script>
+                                                                                <div class="form-group">
+                                                                                    <label for="Nama_Penyakit">Nama
+                                                                                        Penyakit</label>
+                                                                                    <input type="text"
+                                                                                        class="form-control"
+                                                                                        id="Nama_Penyakit"
+                                                                                        name="Nama_Penyakit"
+                                                                                        value="{{ $penyakit->Nama_Penyakit }}"
+                                                                                        required>
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label
+                                                                                        for="Deskripsi_Penyakit">Deskripsi
+                                                                                        Penyakit</label>
+                                                                                    <textarea class="form-control" id="Deskripsi_Penyakit" name="Deskripsi_Penyakit" rows="4" required>{{ $penyakit->Deskripsi_Penyakit }}</textarea>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button"
+                                                                                        class="btn btn-secondary"
+                                                                                        data-bs-dismiss="modal">Batal</button>
+                                                                                    <button type="submit"
+                                                                                        class="btn btn-primary">Simpan
+                                                                                        Perubahan</button>
+                                                                                </div>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @endforeach
+
+                                                        <!-- Delete Modal -->
+                                                        @foreach ($penyakits as $penyakit)
+                                                            <div class="modal fade" id="deleteModal{{ $penyakit->id }}"
+                                                                tabindex="-1"
+                                                                aria-labelledby="deleteModalLabel{{ $penyakit->id }}"
+                                                                aria-hidden="true">
+                                                                <div class="modal-dialog">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h1 class="modal-title fs-5"
+                                                                                id="deleteModalLabel">Hapus Data
+                                                                            </h1>
+                                                                            <button type="button" class="btn-close"
+                                                                                data-bs-dismiss="modal"
+                                                                                aria-label="Close"></button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            Apakah anda ingin menghapus data
+                                                                            ini?<br>{{ $penyakit->Nama_Penyakit }}
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button"
+                                                                                class="btn btn-secondary"
+                                                                                data-bs-dismiss="modal">Tidak</button>
+                                                                            <form
+                                                                                action="{{ route('penyakit.destroy', ['id' => $penyakit->id]) }}"
+                                                                                method="POST">
+                                                                                @csrf
+                                                                                @method('DELETE')
+                                                                                <button type="submit"
+                                                                                    class="btn btn-primary">Ya</button>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @endforeach
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div><!-- /.container-fluid -->
+                                </div>
+                            </div>
+                    </section>
+                    <!-- /.content -->
+                </div>
+                <!-- /.content-wrapper -->
+            </div>
         </div>
-        <!-- /.content-header -->
-
-        <!-- Main content -->
-
-
-
-        <section class="content">
-            <div class="container-fluid">
-                <div>
-                    @if (session('success'))
-                        <div class="alert alert-success" style="color: green;">{{ session('success') }}</div>
-                    @endif
-
-                    @if (session('error'))
-                        <div class="alert alert-danger" style="color: red;">{{ session('error') }}</div>
-                    @endif
-                </div>
-                <div class="card">
-                    <!-- /.card-header -->
-                    <div class="card-body">
-                        <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                            <div class="table-responsive">
-                                <table class="table align-middle mb-0 bg-white">
-                                    <thead class="bg-light">
-                                        <tr>
-                                            <th style="width: 10px">No</th>
-                                            <th style="width: 10px">Kode</th>
-                                            <th>Gambar</th>
-                                            <th>Nama</th>
-                                            <th style="width: 20px">Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($penyakits as $penyakit)
-                                            <tr>
-                                                <td>{{ $no + 1 }} </td>
-                                                <td>{{ $penyakit->kode_penyakit }}</td>
-                                                <td>{{ $penyakit->nama_penyakit }}</td>
-                                                <td>
-                                                    <img src="{{ asset('images/penyakit/' . $penyakit->gambar) }}"
-                                                        alt="{{ $penyakit->nama_penyakit }}" height="50">
-                                                </td>
-                                                <td>
-                                                    <a href="{{ route('penyakit.edit', $penyakit->id) }}"
-                                                        class="btn btn-primary">Edit</a>
-                                                    <button class="btn btn-danger" data-toggle="modal"
-                                                        data-target="#deleteModal{{ $penyakit->id }}">Hapus</button>
-                                                </td>
-                                            </tr>
-
-                                            <!-- Delete Modal -->
-                                            <div class="modal fade" id="deleteModal{{ $penyakit->id }}" tabindex="-1"
-                                                role="dialog" aria-labelledby="deleteModalLabel{{ $penyakit->id }}"
-                                                aria-hidden="true">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title"
-                                                                id="deleteModalLabel{{ $penyakit->id }}">Konfirmasi Hapus
-                                                            </h5>
-                                                            <button type="button" class="close" data-dismiss="modal"
-                                                                aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            Apakah Anda yakin ingin menghapus data penyakit ini?
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                data-dismiss="modal">Tutup</button>
-                                                            <form action="{{ route('penyakit.destroy', $penyakit->id) }}"
-                                                                method="POST">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit"
-                                                                    class="btn btn-danger">Hapus</button>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <!-- Modal Update -->
-                        <div class="modal fade " id="updatePenyakit" tabindex="-1"
-                            aria-labelledby="updatePenyakitLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="updatePenyakitLabel">Edit Data Penyakit</h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body ">
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /.card-body -->
-
-
-                    </div>
-                </div><!-- /.container-fluid -->
-        </section>
-        <!-- /.content -->
     </div>
-    <!-- /.content-wrapper -->
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 @endsection

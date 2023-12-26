@@ -24,6 +24,44 @@
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="pb-3 text-center">Formulir Diagnosa Penyakit Kulit</h2>
+                        <form action="{{ route('hasil.diagnosa') }}" method="post"
+                            class="row gy-2 gx-3 align-items-center">
+
+                            @csrf
+                            <div class="col-sm-6">
+                                <label for="nama">Nama Pasien:</label>
+                                <input type="text" class="form-control" id="nama" name="nama" required>
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="alamat">Alamat Pasien:</label>
+                                <input type="text" class="form-control" id="alamat" name="alamat" required>
+                            </div>
+                            <label>
+                                <span>Pilihan Gejala:</span>
+                            </label>
+                            <div class="col-sm-6">
+                                <div class="px-5">
+                                    @foreach ($gejalas as $gejala)
+                                        <input class="form-check-input" type="checkbox" value="{{ $gejala->Nama_Gejala }}"
+                                            id="gejala" name="gejala[]">
+                                        <option value="{{ $gejala->id }}"><label for="gejala">
+                                                <p>{{ $gejala->Kode_Gejala }}</p>
+                                                - {{ $gejala->Nama_Gejala }}
+                                            </label>
+                                        </option>
+                                    @endforeach
+                                </div>
+                            </div>
+
+                            <div class="">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
 
             </div><!-- /.container-fluid -->
         </section>

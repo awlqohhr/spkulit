@@ -89,7 +89,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('diagnosa') }}" class="nav-link ">
+                            <a href="{{ route('diagnosa.index') }}" class="nav-link ">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     Diagnosa
