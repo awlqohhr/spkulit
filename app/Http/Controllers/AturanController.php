@@ -30,27 +30,56 @@ class AturanController extends Controller
     }
 
       
+    // public function store(Request $request)
+    // {
+    //     // Validasi dan simpan data baru
+    //     $request->validate([
+    //         'Kode_Gejala' => 'required|array',
+    //         // 'Kode_Gejala.*' => 'exists:gejalas,Kode_Gejala',
+    //         // 'Kode_Penyakit' => 'required|array',
+    //         'Kode_Penyakit.*' => 'exists:penyakits,Kode_Penyakit',
+    //         // ... tambahkan validasi sesuai kebutuhan
+    //     ]);
+
+    //     $gejalaCodes = $request->input('Kode_Gejala');
+    //     $penyakitCode = $request->input('Kode_Penyakit');
+
+    //     foreach ($gejalaCodes as $gejalaCode) {
+    //         Aturan::create([
+    //             'Kode_Gejala' => $gejalaCode,
+    //             'Kode_Penyakit' => $penyakitCode,
+    //             // ... tambahkan field sesuai kebutuhan
+    //         ]);
+    //     }
+
+    //     return redirect()->route('aturan.index')->with('success', 'Aturan berhasil ditambahkan.');
+    // }
+
     public function store(Request $request)
     {
         // Validasi dan simpan data baru
         $request->validate([
             'Kode_Gejala' => 'required|array',
-            // 'Kode_Gejala.*' => 'exists:gejalas,Kode_Gejala',
-            // 'Kode_Penyakit' => 'required|array',
-            'Kode_Penyakit.*' => 'exists:penyakits,Kode_Penyakit',
+            'Kode_Penyakit' => 'required|exists:penyakits,Kode_Penyakit',
             // ... tambahkan validasi sesuai kebutuhan
         ]);
 
         $gejalaCodes = $request->input('Kode_Gejala');
         $penyakitCode = $request->input('Kode_Penyakit');
 
+        // Inisialisasi array untuk menyimpan aturan
+        $aturanData = [];
+
         foreach ($gejalaCodes as $gejalaCode) {
-            Aturan::create([
+            $aturanData[] = [
                 'Kode_Gejala' => $gejalaCode,
                 'Kode_Penyakit' => $penyakitCode,
                 // ... tambahkan field sesuai kebutuhan
-            ]);
+            ];
         }
+
+        // Simpan aturan menggunakan metode insert
+        Aturan::insert($aturanData);
 
         return redirect()->route('aturan.index')->with('success', 'Aturan berhasil ditambahkan.');
     }
