@@ -96,15 +96,15 @@
                                         <div class="card-body">
                                             <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
                                                 <!-- Tabel gejala -->
-                                                <div class="table-responsive">
+                                                <div class="table-responsive text-center">
                                                     <table id="tabelaturan" class="table table-bordered compact stripe"
-                                                        style="width:100%">
+                                                        style="width: 90%;">
                                                         <thead>
                                                             <tr>
-                                                                <th style="width:3%">No</th>
+                                                                <th style="width:5%">No</th>
                                                                 <th>Gejala</th>
                                                                 <th>Penyakit</th>
-                                                                <th style="width:10%">Aksi</th>
+                                                                <th style="width:15%">Aksi</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
