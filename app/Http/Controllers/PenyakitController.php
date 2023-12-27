@@ -76,7 +76,7 @@ class PenyakitController extends Controller
             }
     
             // Save new image
-            $imagePath = $request->file('Gambar_Penyakit')->store('public');
+            $imagePath = $request->file('Gambar_Penyakit')->store('gambar_penyakit', 'public');
     
             // Update the model with the new image path
             $penyakit->update([
