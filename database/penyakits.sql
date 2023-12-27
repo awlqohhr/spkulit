@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 25 Des 2023 pada 14.34
+-- Waktu pembuatan: 27 Des 2023 pada 07.34
 -- Versi server: 10.4.28-MariaDB
 -- Versi PHP: 8.2.4
 
@@ -18,24 +18,8 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `spkulit-2`
+-- Database: `db_spkulit-pg`
 --
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `penyakits`
---
-
-CREATE TABLE `penyakits` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `Kode_Penyakit` varchar(255) NOT NULL,
-  `Gambar_Penyakit` varchar(255) DEFAULT NULL,
-  `Nama_Penyakit` varchar(255) NOT NULL,
-  `Deskripsi_Penyakit` text NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data untuk tabel `penyakits`
@@ -62,26 +46,6 @@ INSERT INTO `penyakits` (`id`, `Kode_Penyakit`, `Gambar_Penyakit`, `Nama_Penyaki
 (18, 'P18', 'gambar_penyakit/mnFj7Lx11kZWR3H8xSiCOMXk94oOvyiNlddASjqi.jpg', 'Panu', 'Panu', '2023-12-25 06:32:28', '2023-12-25 06:32:28'),
 (19, 'P19', 'gambar_penyakit/CDJdJ2ZVhH1fHIxpjU12x7nJ78cCFmadVUQxmqPx.jpg', 'Infeksi Parasit (Kudis)', 'Infeksi Parasit (Kudis)', '2023-12-25 06:32:47', '2023-12-25 06:32:47'),
 (20, 'P20', 'gambar_penyakit/QTQmQkZwlvLeKwBqq9d88V6oVolA8LrnPVGIYV4E.jpg', 'Kanker Kulit (Melanoma)', 'Kanker Kulit (Melanoma)', '2023-12-25 06:34:12', '2023-12-25 06:34:12');
-
---
--- Indexes for dumped tables
---
-
---
--- Indeks untuk tabel `penyakits`
---
-ALTER TABLE `penyakits`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT untuk tabel yang dibuang
---
-
---
--- AUTO_INCREMENT untuk tabel `penyakits`
---
-ALTER TABLE `penyakits`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

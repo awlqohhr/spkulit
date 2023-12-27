@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 25 Des 2023 pada 13.25
+-- Waktu pembuatan: 27 Des 2023 pada 08.13
 -- Versi server: 10.4.28-MariaDB
 -- Versi PHP: 8.2.4
 
@@ -18,22 +18,8 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `spkulit-2`
+-- Database: `db_spkulit-pg`
 --
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `gejalas`
---
-
-CREATE TABLE `gejalas` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `Kode_Gejala` varchar(255) NOT NULL,
-  `Nama_Gejala` varchar(255) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data untuk tabel `gejalas`
@@ -75,26 +61,6 @@ INSERT INTO `gejalas` (`id`, `Kode_Gejala`, `Nama_Gejala`, `created_at`, `update
 (33, 'G33', 'Garis atau benjolan kecil pada kulit.', '2023-12-25 05:23:54', '2023-12-25 05:23:54'),
 (34, 'G34', 'Perubahan warna, ukuran, atau bentuk tahi lalat.', '2023-12-25 05:24:04', '2023-12-25 05:24:04'),
 (35, 'G35', 'Perubahan pada kulit sekitar tahi lalat.', '2023-12-25 05:24:13', '2023-12-25 05:24:13');
-
---
--- Indexes for dumped tables
---
-
---
--- Indeks untuk tabel `gejalas`
---
-ALTER TABLE `gejalas`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT untuk tabel yang dibuang
---
-
---
--- AUTO_INCREMENT untuk tabel `gejalas`
---
-ALTER TABLE `gejalas`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
