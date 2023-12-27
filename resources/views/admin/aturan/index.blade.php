@@ -108,26 +108,34 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @forelse($data as $aturan)
+                                                            @php
+                                                                $groupedData = $data->groupBy('Kode_Penyakit');
+                                                            @endphp
+
+                                                            @forelse($groupedData as $kodePenyakit => $aturans)
                                                                 <tr>
                                                                     <td>{{ $loop->iteration }}</td>
-                                                                    <td>{{ $aturan->Kode_Gejala }}</td>
-                                                                    <td>{{ $aturan->Kode_Penyakit }}</td>
-                                                                    <!-- Tambahkan kolom sesuai kebutuhan -->
+                                                                    <td>{{ $aturans->pluck('Kode_Gejala')->implode(', ') }}
+                                                                    </td>
+                                                                    <td>{{ $kodePenyakit }}</td>
                                                                     <td>
-                                                                        <a href="{{ route('aturan.show', $aturan->id) }}"
-                                                                            class="btn btn-info"><i
-                                                                                class="bi bi-eye-fill"></i></a>
-                                                                        <a href="{{ route('aturan.edit', $aturan->id) }}"
-                                                                            class="btn btn-warning"><i
-                                                                                class="bi bi-pencil-fill"></i></a>
+                                                                        <a href="{{ route('aturan.show', $aturans->first()->id) }}"
+                                                                            class="btn btn-info">
+                                                                            <i class="bi bi-eye-fill"></i>
+                                                                        </a>
+                                                                        <a href="{{ route('aturan.edit', $aturans->first()->id) }}"
+                                                                            class="btn btn-warning">
+                                                                            <i class="bi bi-pencil-fill"></i>
+                                                                        </a>
                                                                         <form
-                                                                            action="{{ route('aturan.destroy', $aturan->id) }}"
+                                                                            action="{{ route('aturan.destroy', $aturans->first()->id) }}"
                                                                             method="POST" style="display: inline;">
                                                                             @csrf
                                                                             @method('DELETE')
                                                                             <button type="submit" class="btn btn-danger"
-                                                                                onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
+                                                                                onclick="return confirm('Yakin ingin menghapus?')">
+                                                                                Hapus
+                                                                            </button>
                                                                         </form>
                                                                     </td>
                                                                 </tr>
