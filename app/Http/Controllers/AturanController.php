@@ -59,13 +59,13 @@ class AturanController extends Controller
     public function show($id)
     {
         $aturan = Aturan::findOrFail($id);
-        return view('aturan.show', compact('aturan'));
+        return view('admin.aturan.show', compact('aturan'));
     }
 
     public function edit($id)
     {
         $aturan = Aturan::findOrFail($id);
-        return view('aturan.edit', compact('aturan'));
+        return view('admin.aturan.edit', compact('aturan'));
     }
 
     public function update(Request $request, $id)

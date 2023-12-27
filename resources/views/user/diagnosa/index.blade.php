@@ -42,16 +42,17 @@
                             <label>
                                 <span>Pilihan Gejala:</span>
                             </label>
-                            <div class="col-sm-6">
-                                <div class="px-5">
+                            <div>
+                                <div class="row">
                                     @foreach ($gejalas as $gejala)
-                                        <input class="form-check-input" type="checkbox" value="{{ $gejala->Nama_Gejala }}"
-                                            id="gejala" name="gejala[]">
-                                        <option value="{{ $gejala->id }}"><label for="gejala">
-                                                <p>{{ $gejala->Kode_Gejala }}</p>
-                                                - {{ $gejala->Nama_Gejala }}
-                                            </label>
-                                        </option>
+                                        <div class="col-md-4">
+                                            <div class="form-check">
+                                                <input type="checkbox" name="Kode_Gejala[]" class="form-check-input"
+                                                    value="{{ $gejala->Kode_Gejala }}">
+                                                <label class="form-check-label">{{ $gejala->Kode_Gejala }} <span>-</span>
+                                                    {{ $gejala->Nama_Gejala }}</label>
+                                            </div>
+                                        </div>
                                     @endforeach
                                 </div>
                             </div>

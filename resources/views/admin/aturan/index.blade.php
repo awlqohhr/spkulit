@@ -120,11 +120,13 @@
                                                                     <td>{{ $kodePenyakit }}</td>
                                                                     <td>
                                                                         <a href="{{ route('aturan.show', $aturans->first()->id) }}"
-                                                                            class="btn btn-info">
+                                                                            class="btn btn-info" data-bs-toggle="modal"
+                                                                            data-bs-target="#aturanshowModal">
                                                                             <i class="bi bi-eye-fill"></i>
                                                                         </a>
                                                                         <a href="{{ route('aturan.edit', $aturans->first()->id) }}"
-                                                                            class="btn btn-warning">
+                                                                            class="btn btn-warning" data-bs-toggle="modal"
+                                                                            data-bs-target="#aturaneditModal">
                                                                             <i class="bi bi-pencil-fill"></i>
                                                                         </a>
                                                                         <form
@@ -147,6 +149,10 @@
                                                         </tbody>
                                                     </table>
                                                     <!-- Pagination -->
+
+                                                    @include('admin.aturan.show')
+
+                                                    @include('admin.aturan.edit')
 
                                                 </div>
                                             </div><!-- /.container-fluid -->
