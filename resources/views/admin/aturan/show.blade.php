@@ -10,30 +10,41 @@
              <div class="modal-body">
 
                  @forelse($aturans as $aturan)
-                     <strong>ID Aturan:</strong> {{ $aturan->id }}
+                     <div>
+                         <strong>ID Aturan:</strong> {{ $aturan->id }}
+                     </div>
 
-                     @if ($aturan->penyakits)
-                         <strong>Kode Penyakit:</strong> {{ $aturan->penyakits->Kode_Penyakit }}
-                         <strong>Nama Penyakit:</strong> {{ $aturan->penyakits->Nama_Penyakit }}
-                         <strong>Deskripsi Penyakit:</strong> {{ $aturan->penyakit->Deskripsi_Penyakit }}
+                     @if ($aturan->penyakit)
+                         <div>
+                             <strong>Kode Penyakit:</strong> {{ $aturan->penyakit->Kode_Penyakit }}
+                             <strong>Nama Penyakit:</strong> {{ $aturan->penyakit->Nama_Penyakit }}
+                             <strong>Deskripsi Penyakit:</strong> {{ $aturan->penyakit->Deskripsi_Penyakit }}
+                         </div>
                      @else
-                         <strong>Kode Penyakit:</strong> Data not available
-                         <strong>Nama Penyakit:</strong> Data not available
-                         <strong>Deskripsi Penyakit:</strong> Data not available
+                         <div>
+                             <strong>Kode Penyakit:</strong> Data not available
+                             <strong>Nama Penyakit:</strong> Data not available
+                             <strong>Deskripsi Penyakit:</strong> Data not available
+                         </div>
                      @endif
 
-                     @if ($aturan->gejalas)
-                         <strong>Kode Gejala:</strong> {{ $aturan->gejalas->Kode_Gejala }}
-                         <strong>Nama Gejala:</strong> {{ $aturan->gejalas->Nama_Gejala }}
+                     @if ($aturan->gejala)
+                         <div>
+                             <strong>Kode Gejala:</strong> {{ $aturan->gejala->Kode_Gejala }}
+                             <strong>Nama Gejala:</strong> {{ $aturan->gejala->Nama_Gejala }}
+                         </div>
                      @else
-                         <strong>Kode Gejala:</strong> Data not available
-                         <strong>Nama Gejala:</strong> Data not available
+                         <div>
+                             <strong>Kode Gejala:</strong> Data not available
+                             <strong>Nama Gejala:</strong> Data not available
+                         </div>
                      @endif
 
                      {{-- Add other fields as needed --}}
                  @empty
                      No data available.
                  @endforelse
+
 
              </div>
          </div>
