@@ -156,7 +156,6 @@
                                                                             <i class="bi bi-trash2-fill"></i>
                                                                         </button></div>
                                                                 </div>
-
                                                             </td>
                                                         </tr>
 
