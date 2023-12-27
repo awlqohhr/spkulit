@@ -64,20 +64,37 @@ class AturanController extends Controller
 
     public function edit($id)
     {
+        // Fetch the Aturan data based on the provided ID
         $aturan = Aturan::findOrFail($id);
-        return view('admin.aturan.edit', compact('aturan'));
+
+        // Fetch additional data, like gejalas and penyakits
+        $gejalas = Gejala::all();
+        $penyakits = Penyakit::all();
+
+        return view('admin.aturan.edit', compact('aturan', 'gejalas', 'penyakits'));
     }
+
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'Kode_Gejala' => 'required',
+        // Validate the incoming request data
+        $validatedData = $request->validate([
+            'Kode_Gejala' => 'required|array',
             'Kode_Penyakit' => 'required',
-            // ... tambahkan validasi sesuai kebutuhan
+            // Add other validation rules as needed
         ]);
 
-        Aturan::findOrFail($id)->update($request->all());
-        return redirect()->route('aturan.index')->with('success', 'Aturan berhasil diperbarui.');
+        // Find the Aturan based on the provided ID
+        $aturan = Aturan::findOrFail($id);
+
+        // Update the Aturan data
+        $aturan->update([
+            'Kode_Gejala' => $validatedData['Kode_Gejala'],
+            'Kode_Penyakit' => $validatedData['Kode_Penyakit'],
+            // Add other fields as needed
+        ]);
+
+        return redirect()->route('aturan.index')->with('success', 'Data Aturan berhasil diupdate.');
     }
 
     public function destroy($id)

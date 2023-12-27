@@ -69,10 +69,10 @@ Route::get('/aturan', [AturanController::class, 'index'])->name('aturan.index');
         // Menyimpan data aturan baru
     Route::post('/aturan', [AturanController::class, 'store'])->name('aturan.store');
         // Menampilkan detail aturan
-    Route::get('/aturan/{aturan}', [AturanController::class, 'show'])->name('aturan.show');
-        // Menampilkan formulir edit aturan
-    Route::get('/aturan/{aturan}/edit', [AturanController::class, 'edit'])->name('aturan.edit');
-        // Menyimpan perubahan pada aturan
-    Route::put('/aturan/{aturan}', [AturanController::class, 'update'])->name('aturan.update');
+    // Route::get('/aturan/{aturan}', [AturanController::class, 'show'])->name('aturan.show');
+    //     // Menampilkan formulir edit aturan
+    // Route::get('/aturan/{aturan}/edit', [AturanController::class, 'edit'])->name('aturan.edit');
+    //     // Menyimpan perubahan pada aturan
+    // Route::put('/aturan/{aturan}', [AturanController::class, 'update'])->name('aturan.update');
         // Menghapus aturan
     Route::delete('/aturan/{aturan}', [AturanController::class, 'destroy'])->name('aturan.destroy');
