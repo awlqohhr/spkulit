@@ -140,7 +140,15 @@
                                                                     No Image
                                                                 @endif
                                                             <td>{{ $penyakit->Nama_Penyakit }}</td>
-                                                            <td>{{ $penyakit->Deskripsi_Penyakit }}</td>
+                                                            <td> @php
+                                                                // Split the deskripsi into paragraphs
+                                                                $paragraphs = explode("\n", $penyakit->Deskripsi_Penyakit);
+                                                            @endphp
+
+                                                                @foreach ($paragraphs as $paragraph)
+                                                                    <p>{{ $paragraph }}</p>
+                                                                @endforeach
+                                                            </td>
                                                             <td class="text-center">
                                                                 <div class="row">
                                                                     <div class="pt-2 col"> <button type="button"
@@ -236,7 +244,8 @@
                                                                                     <label
                                                                                         for="Deskripsi_Penyakit">Deskripsi
                                                                                         Penyakit</label>
-                                                                                    <textarea class="form-control" id="Deskripsi_Penyakit" name="Deskripsi_Penyakit" rows="4" required>{{ $penyakit->Deskripsi_Penyakit }}</textarea>
+                                                                                    <textarea class="form-control" id="Deskripsi_Penyakit" name="Deskripsi_Penyakit" oninput="autoparagraph(this)"
+                                                                                        rows="4" required>{{ $penyakit->Deskripsi_Penyakit }}</textarea>
                                                                                 </div>
                                                                                 <div class="modal-footer">
                                                                                     <button type="button"
@@ -247,6 +256,7 @@
                                                                                         Perubahan</button>
                                                                                 </div>
                                                                             </form>
+
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -306,4 +316,17 @@
     </div>
     <!-- Bootstrap JS and Popper.js -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function autoparagraph(textarea) {
+            // Split the text by line breaks
+            const lines = textarea.value.split('\n');
+
+            // Create paragraphs by wrapping lines with <p> tags
+            const paragraphs = lines.map(line => `<p>${line}</p>`);
+
+            // Join paragraphs and set it as the HTML content of the textarea
+            textarea.innerHTML = paragraphs.join('');
+        }
+    </script>
 @endsection
