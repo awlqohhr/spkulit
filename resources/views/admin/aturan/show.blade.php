@@ -14,7 +14,7 @@
                         <strong>Nama Gejala:</strong> {{ $aturans->pluck('gejala.Nama_Gejala')->implode(', ') }} <br>
                         <strong>Kode Penyakit:</strong> {{ $kodePenyakit }} <br>
                         <strong>Nama Penyakit:</strong> {{ $aturans->first()->penyakit->Nama_Penyakit }} <br>
-                        <strong>Deskripsi Penyakit:</strong> {{ $aturans->first()->penyakit->Deskripsi_Penyakit }}
+                        <strong>Deskripsi Penyakit:</strong> {!! nl2br(e($aturans->first()->penyakit->Deskripsi_Penyakit)) !!}
                     </div>
 
                     {{-- Add other fields as needed --}}
