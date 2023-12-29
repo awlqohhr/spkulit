@@ -14,6 +14,18 @@
                          <strong>ID Aturan:</strong> {{ $aturan->id }}
                      </div>
 
+                     @if ($aturan->gejala)
+                         <div>
+                             <strong>Kode Gejala:</strong> {{ $aturan->gejala->Kode_Gejala }}
+                             <strong>Nama Gejala:</strong> {{ $aturan->gejala->Nama_Gejala }}
+                         </div>
+                     @else
+                         <div>
+                             <strong>Kode Gejala:</strong> Data not available
+                             <strong>Nama Gejala:</strong> Data not available
+                         </div>
+                     @endif
+
                      @if ($aturan->penyakit)
                          <div>
                              <strong>Kode Penyakit:</strong> {{ $aturan->penyakit->Kode_Penyakit }}
@@ -25,18 +37,6 @@
                              <strong>Kode Penyakit:</strong> Data not available
                              <strong>Nama Penyakit:</strong> Data not available
                              <strong>Deskripsi Penyakit:</strong> Data not available
-                         </div>
-                     @endif
-
-                     @if ($aturan->gejala)
-                         <div>
-                             <strong>Kode Gejala:</strong> {{ $aturan->gejala->Kode_Gejala }}
-                             <strong>Nama Gejala:</strong> {{ $aturan->gejala->Nama_Gejala }}
-                         </div>
-                     @else
-                         <div>
-                             <strong>Kode Gejala:</strong> Data not available
-                             <strong>Nama Gejala:</strong> Data not available
                          </div>
                      @endif
 
