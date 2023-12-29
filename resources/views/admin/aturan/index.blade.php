@@ -45,7 +45,7 @@
                                         <!-- Modal -->
                                         <div class="modal fade" id="aturanModal" tabindex="-1"
                                             aria-labelledby="aturanModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
+                                            <div class="modal-dialog modal-lg">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <h1 class="modal-title fs-5" id="aturanModalLabel">Tambah Data
@@ -59,14 +59,16 @@
                                                             <div class="form-group">
                                                                 <label for="Kode_Gejala">Pilih Gejala:</label>
                                                                 <div class="row">
-                                                                    @foreach ($gejalas as $gejala)
+                                                                    @foreach ($gejalas->sortBy('Kode_Gejala') as $gejala)
                                                                         <div class="col-md-4">
                                                                             <div class="form-check">
                                                                                 <input type="checkbox" name="Kode_Gejala[]"
                                                                                     class="form-check-input"
                                                                                     value="{{ $gejala->Kode_Gejala }}">
-                                                                                <label
-                                                                                    class="form-check-label">{{ $gejala->Kode_Gejala }}</label>
+                                                                                <label class="form-check-label">
+                                                                                    {{ $gejala->Kode_Gejala }} -
+                                                                                    {{ $gejala->Nama_Gejala }}
+                                                                                </label>
                                                                             </div>
                                                                         </div>
                                                                     @endforeach
@@ -77,9 +79,11 @@
                                                                 <select name="Kode_Penyakit" class="form-control" required>
                                                                     <option value="" selected disabled>-- Pilih
                                                                         Penyakit --</option>
-                                                                    @foreach ($penyakits as $penyakit)
+                                                                    @foreach ($penyakits->sortBy('Kode_Penyakit') as $penyakit)
                                                                         <option value="{{ $penyakit->Kode_Penyakit }}">
-                                                                            {{ $penyakit->Kode_Penyakit }}</option>
+                                                                            {{ $penyakit->Kode_Penyakit }} -
+                                                                            {{ $penyakit->Nama_Penyakit }}
+                                                                        </option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>

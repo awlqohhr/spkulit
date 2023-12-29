@@ -121,7 +121,6 @@
                                                 style="auto">
                                                 <thead>
                                                     <tr>
-                                                        <th data-field="no" style="width: 3%">No.</th>
                                                         <th data-field="kode_penyakit" style="width: 10%">Kode Penyakit</th>
                                                         <th data-field="gambar">Gambar Penyakit</th>
                                                         <th data-field="nama_penyakit">Nama Penyakit</th>
@@ -132,7 +131,6 @@
                                                 <tbody>
                                                     @foreach ($penyakits as $no => $penyakit)
                                                         <tr>
-                                                            <td>{{ $no + 1 }}</td>
                                                             <td>{{ $penyakit->Kode_Penyakit }}</td>
                                                             <td>
                                                                 @if ($penyakit->Gambar_Penyakit)

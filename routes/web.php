@@ -70,6 +70,7 @@ Route::get('/aturan', [AturanController::class, 'index'])->name('aturan.index');
     Route::post('/aturan', [AturanController::class, 'store'])->name('aturan.store');
         // Menampilkan detail aturan
     Route::get('/aturan/{aturan}', [AturanController::class, 'show'])->name('aturan.show');
+
         // Menampilkan formulir edit aturan
     // Route::get('/aturan/{aturan}/edit', [AturanController::class, 'edit'])->name('aturan.edit');
     //     // Menyimpan perubahan pada aturan

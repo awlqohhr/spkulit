@@ -1,17 +1,13 @@
 <!-- Modal -->
 <div class="modal fade" id="aturanshowModal" tabindex="-1" aria-labelledby="aturanshowModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="aturanshowModalLabel">Data Aturan</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                @php
-                    $groupedData = $data->groupBy('Kode_Penyakit');
-                @endphp
-
-                @forelse($groupedData as $kodePenyakit => $aturans)
+                @if (isset($aturans))
                     <div>
                         <strong>ID Aturan:</strong> {{ $aturans->pluck('id')->implode(', ') }} <br>
                         <strong>Kode Gejala:</strong> {{ $aturans->pluck('gejala.Kode_Gejala')->implode(', ') }} <br>
@@ -22,9 +18,19 @@
                     </div>
 
                     {{-- Add other fields as needed --}}
-                @empty
+                @else
                     No data available.
-                @endforelse
+                @endif
+
+                {{-- @if (isset($aturan))
+                    <p><strong>Kode Gejala:</strong> {{ $aturan->Kode_Gejala }}</p>
+                    <p><strong>Kode Penyakit:</strong> {{ $aturan->Kode_Penyakit }}</p>
+                    <!-- Tambahkan informasi atribut lain sesuai kebutuhan -->
+
+                    <a href="{{ url('/aturan') }}">Kembali</a>
+                @else
+                    <p>Aturan tidak ditemukan.</p>
+                @endif --}}
             </div>
         </div>
     </div>
