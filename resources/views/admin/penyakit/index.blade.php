@@ -62,12 +62,14 @@
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <label for="Gambar_Penyakit">Gambar Penyakit</label>
+                                                        <label for="Gambar_Penyakit">Gambar
+                                                            Penyakit</label>
                                                         <input type="file" class="form-control" id="Gambar_Penyakit"
                                                             name="Gambar_Penyakit" onchange="previewImage(this)">
                                                         <div class="text-center mt-2">
-                                                            <img id="image-preview" class="img-fluid rounded" src="#"
-                                                                alt="Preview" style="display:none; max-width: 300px">
+                                                            <img id="image-preview" class="img-fluid rounded"
+                                                                src="#' . $penyakit->Gambar_Penyakit) }}" alt="Preview"
+                                                                style="max-width: 300px;">
                                                         </div>
                                                     </div>
                                                     <script>
@@ -76,16 +78,12 @@
                                                             var file = input.files[0];
                                                             var reader = new FileReader();
 
-                                                            reader.onloadend = function() {
-                                                                preview.src = reader.result;
-                                                                preview.style.display = 'block';
+                                                            reader.onload = function(e) {
+                                                                preview.src = e.target.result;
                                                             };
 
                                                             if (file) {
                                                                 reader.readAsDataURL(file);
-                                                            } else {
-                                                                preview.src = '';
-                                                                preview.style.display = 'none';
                                                             }
                                                         }
                                                     </script>
@@ -134,7 +132,7 @@
                                                             <td>{{ $penyakit->Kode_Penyakit }}</td>
                                                             <td>
                                                                 @if ($penyakit->Gambar_Penyakit)
-                                                                    <img src="{{ asset('storage/' . $penyakit->Gambar_Penyakit) }}"
+                                                                    <img src="{{ asset('storage/gambar_penyakit/' . $penyakit->Gambar_Penyakit) }}"
                                                                         alt="Gambar Penyakit" style="max-width: 100px;">
                                                                 @else
                                                                     No Image
@@ -210,7 +208,7 @@
                                                                                     <div class="text-center mt-2">
                                                                                         <img id="image-preview"
                                                                                             class="img-fluid rounded"
-                                                                                            src="{{ asset('storage/' . $penyakit->Gambar_Penyakit) }}"
+                                                                                            src="{{ asset('storage/gambar_penyakit/' . $penyakit->Gambar_Penyakit) }}"
                                                                                             alt="Preview"
                                                                                             style="max-width: 300px;">
                                                                                     </div>

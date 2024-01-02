@@ -30,7 +30,7 @@ class PenyakitController extends Controller
 
         // Handle image upload
         if ($request->hasFile('Gambar_Penyakit')) {
-            $imagePath = $request->file('Gambar_Penyakit')->store('gambar_penyakit', 'public');
+            $imagePath = $request->file('Gambar_Penyakit')->store('public');
             $validatedData['Gambar_Penyakit'] = $imagePath;
         }
 
@@ -76,7 +76,7 @@ class PenyakitController extends Controller
             }
 
             // Save new image
-            $imagePath = $request->file('Gambar_Penyakit')->store('gambar_penyakit', 'public');
+            $imagePath = $request->file('Gambar_Penyakit')->store('public/gambar_penyakit');
 
             // Update the model with the new image path
             $penyakit->update([
