@@ -49,16 +49,30 @@
                             </div>
                             <div class="col-sm-6">
                                 <label for="no_telp">Nomor Telepon:</label>
-                                <input type="tel" class="form-control" id="no_telp" name="no_telp" required>
+                                <input type="tel" class="form-control" id="no_telp" name="no_telp">
                             </div>
                             <div class="col-sm-12">
-                                <label for="alamat">Alamat Pasien:</label>
+                                <label for="alamat">Alamat Lengkap:</label>
                                 <input type="text" class="form-control" id="alamat" name="alamat" required>
                             </div>
-                            <label>
-                                <span>Pilihan Gejala:</span>
-                            </label>
+                            {{-- <div>
+                                <label>
+                                    <span>Pilihan Gejala:</span>
+                                </label>
+                                <select class="form-select" aria-label="Default select example" name="Kode_Gejala[]"
+                                    required>
+                                    <option value="" disabled selected>Pilih Gejala yang Anda Keluhkan</option>
+                                    @foreach ($gejalas as $gejala)
+                                        <option value="{{ $gejala->Kode_Gejala }}">{{ $gejala->Kode_Gejala }} -
+                                            {{ $gejala->Nama_Gejala }}</option>
+                                    @endforeach
+                                </select>
+                            </div> --}}
+
                             <div>
+                                <label>
+                                    <span>Pilihan Gejala:</span>
+                                </label>
                                 <div class="row">
                                     @foreach ($gejalas as $gejala)
                                         <div class="col-md-4">

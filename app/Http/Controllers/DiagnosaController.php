@@ -3,57 +3,50 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Pasien;
 use App\Models\Gejala;
 use App\Models\Aturan;
 use App\Models\Penyakit;
+use App\Models\Diagnosa;
+
 
 class DiagnosaController extends Controller
 {
-    public function index()
-    {
-        $gejalas = Gejala::all();
-        return view('user.diagnosa.index', compact('gejalas'));
-    }
-
     public function showForm()
     {
-        $gejalas = Gejala::all(); // Fetch all gejalas from the database
+        // Fetch gejalas from the database
+        $gejalas = Gejala::all(); // Fetch your gejalas here, e.g., Gejala::all();
+
         return view('user.diagnosa.index', compact('gejalas'));
     }
 
-    public function hasilDiagnosa(Request $request)
+    public function processForm(Request $request)
     {
         // Validate the form data
-        $request->validate([
-            'nama' => 'required|string',
-            'alamat' => 'required|string',
-            'Nama_Gejala' => 'required|array',
-            'Nama_Gejala.*' => 'exists:gejalas,Nama_Gejala', // Assuming Nama_Gejala is the column name in gejalas table
+        $validatedData = $request->validate([
+            'nama' => 'required|string|max:255',
+            'umur' => 'required|numeric',
+            'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
+            'no_telp' => 'nullable|numeric',
+            'alamat' => 'required|string|max:255',
+            'Kode_Gejala' => 'required|array', // Assuming Kode_Gejala is an array
+            'Kode_Gejala.*' => 'exists:gejalas,Kode_Gejala', // Validate gejala exists in the gejalas table
         ]);
-    
-        // Get selected gejalas from the form
-        $selectedGejalas = $request->input('gejala');
-    
-        // Perform more complex diagnosis logic
-        $penyakits = Penyakit::with('gejalas')->get();
-    
-        $results = [];
-        foreach ($penyakits as $penyakit) {
-            $matchedGejalas = $penyakit->gejalas->pluck('Nama_Gejala')->intersect($selectedGejalas)->count();
-    
-            
-            $results[] = [
-                'penyakit' => $penyakit,
-            ];
-        }
-    
-    
-        // Get the top result
-        $topResult = isset($results[0]) ? $results[0]['penyakit'] : null;
 
-        // Pass the result to the view
-        return view('user.diagnosa.hasil', compact('topResult', 'results'));
+        // Save the form data to the database
+        $diagnosa = new Diagnosa;
+        $diagnosa->nama = $validatedData['nama'];
+        $diagnosa->umur = $validatedData['umur'];
+        $diagnosa->jenis_kelamin = $validatedData['jenis_kelamin'];
+        $diagnosa->no_telp = $validatedData['no_telp'];
+        $diagnosa->alamat = $validatedData['alamat'];
+        // You may need to adjust this part based on your actual database structure
+        $diagnosa->save();
+
+        // Attach gejalas to the diagnosa
+        $diagnosa->gejalas()->attach($validatedData['Kode_Gejala']);
+
+        // Now, you can add logic to find the disease based on the selected gejalas
+
+        return redirect()->route('hasil.diagnosa'); // Redirect to the result page
     }
-
 }
