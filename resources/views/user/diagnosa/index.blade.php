@@ -27,8 +27,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h2 class="pb-3 text-center">Formulir Diagnosa Penyakit Kulit</h2>
-                        <form action="{{ route('hasil.diagnosa') }}" method="post"
-                            class="row gy-2 gx-3 align-items-center">
+                        <form action="#" method="post" class="row gy-2 gx-3 align-items-center">
 
                             @csrf
                             <div class="col-sm-6">
