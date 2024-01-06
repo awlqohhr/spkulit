@@ -35,7 +35,23 @@
                                 <label for="nama">Nama Pasien:</label>
                                 <input type="text" class="form-control" id="nama" name="nama" required>
                             </div>
+                            <div class="col-sm-2">
+                                <label for="umur">Umur:</label>
+                                <input type="number" class="form-control" id="umur" name="umur" required>
+                            </div>
                             <div class="col-sm-6">
+                                <label for="jenis_kelamin">Jenis Kelamin:</label>
+                                <select class="form-control" id="jenis_kelamin" name="jenis_kelamin" required>
+                                    <option value="" disabled selected>Pilih Jenis Kelamin</option>
+                                    <option value="Laki-laki">Laki-laki</option>
+                                    <option value="Perempuan">Perempuan</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="no_telp">Nomor Telepon:</label>
+                                <input type="tel" class="form-control" id="no_telp" name="no_telp" required>
+                            </div>
+                            <div class="col-sm-12">
                                 <label for="alamat">Alamat Pasien:</label>
                                 <input type="text" class="form-control" id="alamat" name="alamat" required>
                             </div>
@@ -58,7 +74,7 @@
                             </div>
 
                             <div class="">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" class="btn btn-primary">Diagnosa</button>
                             </div>
                         </form>
                     </div>
