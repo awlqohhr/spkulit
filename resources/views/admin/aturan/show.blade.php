@@ -21,16 +21,6 @@
                 @else
                     No data available.
                 @endif
-
-                {{-- @if (isset($aturan))
-                    <p><strong>Kode Gejala:</strong> {{ $aturan->Kode_Gejala }}</p>
-                    <p><strong>Kode Penyakit:</strong> {{ $aturan->Kode_Penyakit }}</p>
-                    <!-- Tambahkan informasi atribut lain sesuai kebutuhan -->
-
-                    <a href="{{ url('/aturan') }}">Kembali</a>
-                @else
-                    <p>Aturan tidak ditemukan.</p>
-                @endif --}}
             </div>
         </div>
     </div>
