@@ -3,106 +3,56 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Aturan;
-use App\Models\Gejala;
 use App\Models\Diagnosa;
-use App\Models\HasilDiagnosa;
+use App\Models\Gejala;
+use App\Models\Aturan;
+use App\Models\Penyakit;
 
 class DiagnosaController extends Controller
 {
     public function showForm()
     {
-        // Ambil gejala dari database (menggunakan model Gejala)
         $gejalas = Gejala::all();
-
         return view('user.diagnosa.index', compact('gejalas'));
     }
 
-    public function processForm(Request $request)
+    public function processDiagnosa(Request $request)
     {
-        // Validasi data formulir
-        $validatedData = $request->validate([
-            'nama' => 'required|string|max:255',
-            'umur' => 'required|numeric',
-            'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
-            'no_telp' => 'nullable|numeric',
-            'alamat' => 'required|string|max:255',
+        $request->validate([
+            'nama' => 'required|string',
+            'umur' => 'required|integer',
+            'jenis_kelamin' => 'required|string',
+            'no_telp' => 'nullable|string',
+            'alamat' => 'required|string',
             'Kode_Gejala' => 'required|array',
-            'Kode_Gejala.*' => 'exists:gejalas,Kode_Gejala',
         ]);
 
-        // Simpan data ke dalam database (gunakan model Diagnosa)
-        $diagnosa = Diagnosa::create($validatedData);
+        $gejalaCodes = $request->input('Kode_Gejala');
+        $gejalas = Gejala::whereIn('Kode_Gejala', $gejalaCodes)->get();
 
-        // Hubungkan gejala dengan diagnosa
-        $diagnosa->gejalas()->attach($validatedData['Kode_Gejala']);
+        // Menambahkan logika untuk memproses gejala yang dipilih dan menentukan diagnosa
+        $kodePenyakit = $this->diagnosa($gejalas);
 
-        // Implementasikan logika diagnosa berdasarkan aturan
-        $penyakit = $this->diagnose($diagnosa);
+        // Menyimpan data diagnosa ke dalam database
+        $diagnosa = Diagnosa::create($request->all());
+        $diagnosa->update(['kode_penyakit' => $kodePenyakit]);
 
-        return redirect()->route('user.diagnosa.hasil', ['diagnosa' => $diagnosa->id, 'penyakit' => $penyakit]);
+        return redirect()->route('show.diagnosa')->with('success', 'Diagnosa berhasil dilakukan.');
     }
 
-    private function diagnose(Diagnosa $diagnosa)
+    private function diagnosa($gejalas)
     {
-        // Ambil gejala dari diagnosa
-        $gejalas = $diagnosa->gejalas()->pluck('Kode_Gejala')->toArray();
+        $gejalaCodes = $gejalas->pluck('Kode_Gejala');
 
-        // Ambil semua aturan dari database (gunakan model Aturan)
-        $aturans = Aturan::all();
+        // Mendapatkan aturan berdasarkan gejala yang dipilih
+        $aturans = Aturan::whereIn('Kode_Gejala', $gejalaCodes)->get();
 
-        // Inisialisasi array untuk menyimpan penyakit yang mungkin
-        $penyakitMungkin = [];
+        // Menghitung jumlah kemunculan setiap penyakit
+        $penyakitCounts = $aturans->groupBy('kode_penyakit')->map->count();
 
-        // Iterasi aturan dan cek apakah gejala terpenuhi
-        foreach ($aturans as $aturan) {
-            $gejalaAturan = $aturan->gejala;
+        // Menentukan penyakit yang paling sering muncul
+        $mostFrequentPenyakit = $penyakitCounts->sortDesc()->keys()->first();
 
-            // Jika semua gejala aturan terpenuhi, tambahkan penyakit ke array
-            if (count(array_intersect($gejalas, $gejalaAturan)) === count($gejalaAturan)) {
-                $penyakitMungkin[] = $aturan->penyakit;
-            }
-        }
-
-        // Jika ada penyakit yang mungkin, ambil yang pertama
-        if (!empty($penyakitMungkin)) {
-            $penyakit = $penyakitMungkin[0];
-        } else {
-            // Jika tidak ada penyakit yang cocok, berikan nilai default
-            $penyakit = 'Tidak Diketahui';
-        }
-
-        return  $penyakitMungkin;
-    }
-
-    public function showResult(Diagnosa $diagnosa)
-    {
-        // Ambil hasil diagnosa dari database atau sesuai logika yang Anda terapkan
-        $hasilDiagnosa = $this->getDiagnosaResult($diagnosa);
-
-        return view('user.diagnosa.hasil', compact('diagnosa', 'hasilDiagnosa'));
-    }
-
-    private function getDiagnosaResult(Diagnosa $diagnosa)
-    {
-        // Check if there is an existing result for this diagnosa
-        $hasilDiagnosa = HasilDiagnosa::where('diagnosa_id', $diagnosa->id)->first();
-
-        if ($hasilDiagnosa) {
-            // If result exists, return it
-            return $hasilDiagnosa->hasil;
-        } else {
-            // If result doesn't exist, implement your custom logic to calculate the result
-            // For now, let's assume a simple message
-            $hasilDiagnosaMessage = 'Diagnosa berhasil dilakukan, hasil belum tersedia.';
-
-            // Save the result to the database
-            HasilDiagnosa::create([
-                'diagnosa_id' => $diagnosa->id,
-                'hasil' => $hasilDiagnosaMessage,
-            ]);
-
-            return $hasilDiagnosaMessage;
-        }
+        return $mostFrequentPenyakit;
     }
 }

@@ -14,16 +14,33 @@
             <div class="container-fluid">
                 <div class="card">
                     <div class="card-body">
-                        <h2 class="pb-3 text-center">Hasil Diagnosis</h2>
+                        <h2 class="pb-3 text-center">Hasil Diagnosa Penyakit Kulit</h2>
 
-                        @if ($results !== null && count($results) > 0)
-                            <ul>
-                                @foreach ($results as $result)
-                                    <li>{{ $result['penyakit']->name }}</li>
-                                @endforeach
-                            </ul>
+                        <p><strong>Nama Pasien:</strong> {{ $diagnosa->nama }}</p>
+                        <p><strong>Umur:</strong> {{ $diagnosa->umur }}</p>
+                        <p><strong>Jenis Kelamin:</strong> {{ $diagnosa->jenis_kelamin }}</p>
+                        <p><strong>Nomor Telepon:</strong> {{ $diagnosa->no_telp ?: '-' }}</p>
+                        <p><strong>Alamat Lengkap:</strong> {{ $diagnosa->alamat }}</p>
+
+                        <h3 class="pt-3">Hasil Diagnosa:</h3>
+                        @if ($diagnosa->kode_penyakit)
+                            <p>Anda mungkin mengalami penyakit dengan kode: <strong>{{ $diagnosa->kode_penyakit }}</strong>
+                            </p>
+
+                            <h4>Informasi Penyakit:</h4>
+                            @php
+                                $penyakit = App\Models\Penyakit::where('kode_penyakit', $diagnosa->kode_penyakit)->first();
+                            @endphp
+
+                            @if ($penyakit)
+                                <p><strong>Nama Penyakit:</strong> {{ $penyakit->nama_penyakit }}</p>
+                                <p><strong>Deskripsi:</strong> {{ $penyakit->deskripsi }}</p>
+                                <!-- Tambahkan informasi lainnya sesuai kebutuhan -->
+                            @else
+                                <p>Informasi penyakit tidak tersedia.</p>
+                            @endif
                         @else
-                            <p>No results found.</p>
+                            <p>Tidak dapat menentukan penyakit berdasarkan gejala yang dipilih.</p>
                         @endif
                     </div>
                 </div>

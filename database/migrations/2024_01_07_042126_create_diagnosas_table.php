@@ -16,10 +16,9 @@ return new class extends Migration
             $table->string('nama');
             $table->integer('umur');
             $table->string('jenis_kelamin');
+            $table->string('no_telp')->nullable();
             $table->string('alamat');
-            $table->string('no_telp');
-            $table->text('gejala');
-            $table->text('diagnosa');
+            // Add other fields as needed
             $table->timestamps();
         });
     }
