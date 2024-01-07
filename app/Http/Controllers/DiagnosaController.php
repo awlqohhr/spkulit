@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Diagnosa;
 use App\Models\Gejala;
-use App\Models\Aturan;
-use App\Models\Penyakit;
 use App\Models\HasilDiagnosa;
 use App\Http\Controllers\AturanController;
 
@@ -66,18 +64,55 @@ class DiagnosaController extends Controller
 
     private function diagnosa($gejalas)
     {
+        // Ambil Kode_Gejala dari gejala yang dipilih
         $gejalaCodes = $gejalas->pluck('Kode_Gejala')->toArray();
 
-        // Get aturan based on selected gejala
+        // Inisialisasi array untuk menyimpan fakta
+        $fakta = [];
+
+        // Iterasi gejalaCodes untuk menentukan nilai fakta
+        foreach ($gejalaCodes as $gejalaCode) {
+            $fakta[$gejalaCode] = true;
+        }
+
+        // Inisialisasi array untuk menyimpan hasil dari inferensi
+        $hasilInferensi = [];
+
+        // Ambil semua aturan berdasarkan gejala yang dipilih
         $aturans = $this->aturanController->getAturanByGejalaCodes($gejalaCodes);
 
-        // Count occurrences of each penyakit
-        $penyakitCounts = $aturans->groupBy('Kode_Penyakit')->map->count();
+        // Iterasi setiap aturan untuk melakukan inferensi
+        foreach ($aturans as $aturan) {
+            $gejalaRule = $aturan->gejala;
 
-        // Determine the most frequent penyakit
-        $mostFrequentPenyakit = $penyakitCounts->sortDesc()->keys()->first();
+            // Check apakah semua gejala aturan terpenuhi
+            if ($this->checkFakta($gejalaRule, $fakta)) {
+                $hasilInferensi[$aturan->Kode_Penyakit] = true;
+            }
+        }
 
-        return $mostFrequentPenyakit;
+        // Ambil Penyakit yang memiliki hasil inferensi
+        $penyakitCodes = array_keys($hasilInferensi);
+
+        // Jika tidak ada hasil inferensi, kembalikan 'Tidak diketahui'
+        if (empty($penyakitCodes)) {
+            return 'Tidak diketahui';
+        }
+
+        // Kembalikan penyakit dengan prioritas tertinggi (berdasarkan aturan)
+        return $penyakitCodes[0];
+    }
+
+    private function checkFakta($gejalaRule, $fakta)
+    {
+        // Check apakah semua gejala aturan terpenuhi
+        foreach ($gejalaRule as $gejala) {
+            if (!isset($fakta[$gejala]) || !$fakta[$gejala]) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public function showHasilDiagnosa($id)

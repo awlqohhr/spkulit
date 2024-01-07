@@ -20,6 +20,11 @@ class AturanController extends Controller
         return view('admin.aturan.index', compact('data', 'penyakits', 'gejalas'));
     }
 
+    public function getAturanByGejalaCodes($gejalaCodes)
+    {
+        return Aturan::whereIn('Kode_Gejala', $gejalaCodes)->get();
+    }
+
     public function create()
     {
         // Tampilkan form untuk membuat data baru
@@ -99,10 +104,5 @@ class AturanController extends Controller
     {
         Aturan::findOrFail($id)->delete();
         return redirect()->route('aturan.index')->with('success', 'Aturan berhasil dihapus.');
-    }
-
-    public function getAturanByGejalaCodes($gejalaCodes)
-    {
-        return Aturan::whereIn('Kode_Gejala', $gejalaCodes)->get();
     }
 }

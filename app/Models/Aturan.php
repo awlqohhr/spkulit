@@ -19,21 +19,13 @@ class Aturan extends Model
         // Tambahkan atribut lain sesuai kebutuhan
     ];
 
-
-    public function penyakit()
-    {
-        return $this->belongsTo(Penyakit::class, 'Kode_Penyakit', 'Kode_Penyakit');
-    }
-
     public function gejala()
     {
         return $this->belongsTo(Gejala::class, 'Kode_Gejala', 'Kode_Gejala');
     }
 
-    // public function gejala()
-    // {
-    //     return $this->hasMany(Gejala::class, 'Kode_Penyakit', 'Kode_Penyakit')
-    //             ->where('aturans.Kode_Gejala', $this->Kode_Gejala)
-    //             ->where('aturans.id', '!=', $this->id);
-    // }
+    public function penyakit()
+    {
+        return $this->belongsTo(Penyakit::class, 'Kode_Penyakit', 'Kode_Penyakit');
+    }
 }
