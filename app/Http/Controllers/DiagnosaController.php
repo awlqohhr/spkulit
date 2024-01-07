@@ -11,6 +11,13 @@ use App\Models\HasilDiagnosa;
 
 class DiagnosaController extends Controller
 {
+    protected $aturanController;
+
+    public function __construct(AturanController $aturanController)
+    {
+        $this->aturanController = $aturanController;
+    }
+
     public function showForm()
     {
         $gejalas = Gejala::all();
@@ -51,12 +58,18 @@ class DiagnosaController extends Controller
         return redirect()->route('show.diagnosa')->with('success', 'Diagnosa berhasil dilakukan.');
     }
 
+    public function viewDiagnosa($id)
+    {
+        $diagnosa = HasilDiagnosa::findOrFail($id);
+        return view('user.diagnosa.view', compact('diagnosa'));
+    }
+
     private function diagnosa($gejalas)
     {
         $gejalaCodes = $gejalas->pluck('Kode_Gejala');
 
         // Mendapatkan aturan berdasarkan gejala yang dipilih
-        $aturans = Aturan::whereIn('Kode_Gejala', $gejalaCodes)->get();
+        $aturans = $this->aturanController->getAturanByGejalaCodes($gejalaCodes);
 
         // Menghitung jumlah kemunculan setiap penyakit
         $penyakitCounts = $aturans->groupBy('Nama_Penyakit')->map->count();

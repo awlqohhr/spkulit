@@ -29,7 +29,7 @@ class AturanController extends Controller
         return view('create', compact('penyakits', 'gejalas'));
     }
 
-      
+
     public function store(Request $request)
     {
         // Validasi dan simpan data baru
@@ -55,7 +55,7 @@ class AturanController extends Controller
         return redirect()->route('aturan.index')->with('success', 'Aturan berhasil ditambahkan.');
     }
 
-       
+
     public function show($id)
     {
         $aturans = Aturan::with(['penyakits', 'gejalas'])->findOrFail($id);

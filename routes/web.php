@@ -27,9 +27,8 @@ Route::get('/Dashboard Admin', [AdminController::class, 'index'])->name('Dashboa
 use App\Http\Controllers\DiagnosaController;
 
 Route::get('/diagnosa', [DiagnosaController::class, 'showForm'])->name('show.diagnosa');
-Route::post('/diagnosa', [DiagnosaController::class, 'processForm'])->name('process.diagnosa');
-
-
+Route::post('/diagnosa/process', [DiagnosaController::class, 'processForm'])->name('process.diagnosa');
+Route::get('/diagnosa/view/{id}', [DiagnosaController::class, 'viewDiagnosa'])->name('view.diagnosa');
 
 
 // controller penyakit
