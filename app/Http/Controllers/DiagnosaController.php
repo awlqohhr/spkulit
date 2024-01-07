@@ -66,7 +66,7 @@ class DiagnosaController extends Controller
 
     private function diagnosa($gejalas)
     {
-        $gejalaCodes = $gejalas->pluck('Kode_Gejala');
+        $gejalaCodes = $gejalas->pluck('Kode_Gejala')->toArray();
 
         // Get aturan based on selected gejala
         $aturans = $this->aturanController->getAturanByGejalaCodes($gejalaCodes);
