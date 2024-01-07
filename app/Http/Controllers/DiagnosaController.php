@@ -55,7 +55,7 @@ class DiagnosaController extends Controller
         $hasilDiagnosa->alamat = $diagnosa->alamat;
 
         // Pastikan Kode_Penyakit memiliki nilai sebelum menyimpan
-        $hasilDiagnosa->Kode_Penyakit = $diagnosa->Kode_Penyakit ?? 'Tidak diketahui';
+        $hasilDiagnosa->kode_penyakit = $diagnosa->Kode_Penyakit ?? 'Tidak diketahui';
 
         $hasilDiagnosa->save();
 
