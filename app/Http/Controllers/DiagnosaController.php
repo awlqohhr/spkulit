@@ -39,11 +39,11 @@ class DiagnosaController extends Controller
         $gejalas = Gejala::whereIn('Kode_Gejala', $gejalaCodes)->get();
 
         // Process gejala and determine the diagnosis using AturanController
-        $namaPenyakit = $this->diagnosa($gejalas);
+        $kodePenyakit = $this->diagnosa($gejalas);
 
         // Store diagnosis data in the database
         $diagnosa = Diagnosa::create($request->all());
-        $diagnosa->update(['Nama_Penyakit' => $namaPenyakit]);
+        $diagnosa->update(['Kode_Penyakit' => $kodePenyakit]);
 
         // Menyimpan hasil diagnosa ke dalam database
         $hasilDiagnosa = new HasilDiagnosa();
@@ -54,8 +54,8 @@ class DiagnosaController extends Controller
         $hasilDiagnosa->no_telp = $diagnosa->no_telp;
         $hasilDiagnosa->alamat = $diagnosa->alamat;
 
-        // Pastikan Nama_Penyakit memiliki nilai sebelum menyimpan
-        $hasilDiagnosa->Nama_Penyakit = $diagnosa->Nama_Penyakit ?? 'Tidak diketahui';
+        // Pastikan Kode_Penyakit memiliki nilai sebelum menyimpan
+        $hasilDiagnosa->Kode_Penyakit = $diagnosa->Kode_Penyakit ?? 'Tidak diketahui';
 
         $hasilDiagnosa->save();
 
