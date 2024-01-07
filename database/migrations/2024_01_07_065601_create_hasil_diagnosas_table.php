@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('no_telp')->nullable();
             $table->string('alamat');
             $table->string('kode_penyakit');
-            // Tambahkan kolom lain jika diperlukan
 
             $table->timestamps();
         });
