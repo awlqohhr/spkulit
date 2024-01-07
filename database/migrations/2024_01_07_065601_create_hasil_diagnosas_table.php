@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('jenis_kelamin');
             $table->string('no_telp')->nullable();
             $table->string('alamat');
-            $table->string('Nama_Penyakit');
+            $table->string('Kode_Penyakit');
 
             $table->timestamps();
         });
