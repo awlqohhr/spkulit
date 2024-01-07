@@ -9,12 +9,14 @@
             <div class="modal-body">
                 @if (isset($aturans))
                     <div>
-                        <strong>ID Aturan:</strong> {{ $aturans->pluck('id')->implode(', ') }} <br>
-                        <strong>Kode Gejala:</strong> {{ $aturans->pluck('gejala.Kode_Gejala')->implode(', ') }} <br>
-                        <strong>Nama Gejala:</strong> {{ $aturans->pluck('gejala.Nama_Gejala')->implode(', ') }} <br>
-                        <strong>Kode Penyakit:</strong> {{ $kodePenyakit }} <br>
-                        <strong>Nama Penyakit:</strong> {{ $aturans->first()->penyakit->Nama_Penyakit }} <br>
-                        <strong>Deskripsi Penyakit:</strong> {!! nl2br(e($aturans->first()->penyakit->Deskripsi_Penyakit)) !!}
+                        <strong>ID Aturan:</strong> <br> {{ $aturans->pluck('id')->implode(', ') }} <br>
+                        <strong>Kode Gejala:</strong> <br> {{ $aturans->pluck('gejala.Kode_Gejala')->implode(', ') }}
+                        <br>
+                        <strong>Nama Gejala:</strong> <br> {{ $aturans->pluck('gejala.Nama_Gejala')->implode(', ') }}
+                        <br>
+                        <strong>Kode Penyakit:</strong> <br> {{ $kodePenyakit }} <br>
+                        <strong>Nama Penyakit:</strong> <br> {{ $aturans->first()->penyakit->Nama_Penyakit }} <br>
+                        <strong>Deskripsi dan Penanganan:</strong> <br> {!! nl2br(e($aturans->first()->penyakit->Deskripsi_Penyakit)) !!}
                     </div>
 
                     {{-- Add other fields as needed --}}

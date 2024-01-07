@@ -33,8 +33,9 @@
                             @endphp
 
                             @if ($penyakit)
-                                <p><strong>Nama Penyakit:</strong> {{ $penyakit->Nama_Penyakit }}</p>
-                                <p><strong>Deskripsi:</strong> {{ $penyakit->deskripsi }}</p>
+                                <p><strong>Nama Penyakit:</strong> <br> {{ $aturans->first()->penyakit->Nama_Penyakit }}
+                                </p>
+                                <p><strong>Deskripsi dan Penanganan:</strong> <br> {!! nl2br(e($aturans->first()->penyakit->Deskripsi_Penyakit)) !!}</p>
                                 <!-- Tambahkan informasi lainnya sesuai kebutuhan -->
                             @else
                                 <p>Informasi penyakit tidak tersedia.</p>

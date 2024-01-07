@@ -102,4 +102,10 @@ class AturanController extends Controller
         Aturan::findOrFail($id)->delete();
         return redirect()->route('aturan.index')->with('success', 'Aturan berhasil dihapus.');
     }
+
+    public function getAturanByGejalaCodes($gejalaCodes)
+    {
+        // Mendapatkan aturan berdasarkan gejala yang dipilih
+        return Aturan::whereIn('Kode_Gejala', $gejalaCodes)->get();
+    }
 }
