@@ -17,7 +17,7 @@ class DiagnosaController extends Controller
         return view('user.diagnosa.index', compact('gejalas'));
     }
 
-    public function processDiagnosa(Request $request)
+    public function processForm(Request $request)
     {
         $request->validate([
             'nama' => 'required|string',
@@ -36,16 +36,16 @@ class DiagnosaController extends Controller
 
         // Store diagnosis data in the database
         $diagnosa = Diagnosa::create($request->all());
-        $diagnosa->update(['kode_penyakit' => $kodePenyakit]);
+        $diagnosa->update(['Kode_Penyakit' => $kodePenyakit]);
 
         // Menyimpan hasil diagnosa ke dalam database
         $hasilDiagnosa = new HasilDiagnosa();
-        $hasilDiagnosa->nama_pasien = $diagnosa->nama;
+        $hasilDiagnosa->nama = $diagnosa->nama;
         $hasilDiagnosa->umur = $diagnosa->umur;
         $hasilDiagnosa->jenis_kelamin = $diagnosa->jenis_kelamin;
         $hasilDiagnosa->no_telp = $diagnosa->no_telp;
         $hasilDiagnosa->alamat = $diagnosa->alamat;
-        $hasilDiagnosa->kode_penyakit = $diagnosa->kode_penyakit;
+        $hasilDiagnosa->Kode_Penyakit = $diagnosa->Kode_Penyakit;
         $hasilDiagnosa->save();
 
         return redirect()->route('show.diagnosa')->with('success', 'Diagnosa berhasil dilakukan.');
@@ -59,7 +59,7 @@ class DiagnosaController extends Controller
         $aturans = Aturan::whereIn('Kode_Gejala', $gejalaCodes)->get();
 
         // Menghitung jumlah kemunculan setiap penyakit
-        $penyakitCounts = $aturans->groupBy('kode_penyakit')->map->count();
+        $penyakitCounts = $aturans->groupBy('Kode_Penyakit')->map->count();
 
         // Menentukan penyakit yang paling sering muncul
         $mostFrequentPenyakit = $penyakitCounts->sortDesc()->keys()->first();

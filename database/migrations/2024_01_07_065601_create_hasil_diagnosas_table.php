@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('hasil_diagnosas', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_pasien');
+            $table->string('nama');
             $table->integer('umur');
             $table->string('jenis_kelamin');
             $table->string('no_telp')->nullable();
             $table->string('alamat');
-            $table->string('kode_penyakit');
+            $table->string('Kode_Penyakit');
 
             $table->timestamps();
         });
