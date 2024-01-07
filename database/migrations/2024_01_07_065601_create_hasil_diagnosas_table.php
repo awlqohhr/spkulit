@@ -21,8 +21,6 @@ return new class extends Migration
             $table->string('Kode_Penyakit');
 
             $table->timestamps();
-
-            $table->foreign('Kode_Penyakit')->references('Kode_Penyakit')->on('penyakits')->onDelete('cascade');
         });
     }
 

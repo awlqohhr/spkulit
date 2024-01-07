@@ -24,6 +24,7 @@
                     No data available.
                 @endif
             </div>
+
         </div>
     </div>
 </div>

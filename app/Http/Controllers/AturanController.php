@@ -20,11 +20,6 @@ class AturanController extends Controller
         return view('admin.aturan.index', compact('data', 'penyakits', 'gejalas'));
     }
 
-    public function getAturanByGejalaCodes($gejalaCodes)
-    {
-        return Aturan::whereIn('Kode_Gejala', $gejalaCodes)->get();
-    }
-
     public function create()
     {
         // Tampilkan form untuk membuat data baru

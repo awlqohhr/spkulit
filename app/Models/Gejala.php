@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Gejala extends Model
 {
     use HasFactory;
-
     protected $table = 'gejalas';
     protected $fillable = ['Kode_Gejala', 'Nama_Gejala'];
 
@@ -16,10 +15,5 @@ class Gejala extends Model
     public function penyakits()
     {
         return $this->belongsToMany(Penyakit::class, 'penyakit_gejala', 'gejala_id', 'penyakit_id');
-    }
-
-    public function aturans()
-    {
-        return $this->belongsToMany(Aturan::class, 'aturans', 'Kode_Gejala', 'Kode_Penyakit');
     }
 }

@@ -126,14 +126,12 @@
                                                                         <!-- Button trigger modal -->
                                                                         <button type="button" class="btn btn-info"
                                                                             data-bs-toggle="modal"
-                                                                            data-bs-target="#aturanshowModal"
-                                                                            href="#">
+                                                                            data-bs-target="#aturanshowModal">
                                                                             <i class="bi bi-eye-fill"></i>
                                                                         </button>
                                                                         <button type="button" class="btn btn-warning"
                                                                             data-bs-toggle="modal"
-                                                                            data-bs-target="#aturaneditModal"
-                                                                            href="#">
+                                                                            data-bs-target="#aturaneditModal">
                                                                             <i class="bi bi-pencil-fill"></i>
                                                                         </button>
                                                                         <form
