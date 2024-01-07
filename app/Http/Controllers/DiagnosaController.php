@@ -61,7 +61,7 @@ class DiagnosaController extends Controller
     public function viewDiagnosa($id)
     {
         $diagnosa = HasilDiagnosa::findOrFail($id);
-        return view('user.diagnosa.view', compact('diagnosa'));
+        return view('user.diagnosa.hasil', compact('diagnosa'));
     }
 
     private function diagnosa($gejalas)
