@@ -137,10 +137,12 @@
                                                                     No Image
                                                                 @endif
                                                             <td>{{ $penyakit->Nama_Penyakit }}</td>
-                                                            <td> @php
-                                                                // Split the deskripsi into paragraphs
-                                                                $paragraphs = explode("\n", $penyakit->Deskripsi_Penyakit);
-                                                            @endphp
+                                                            <td
+                                                                style="max-height: 100px; overflow: hidden; line-height: 1.2;">
+                                                                @php
+                                                                    // Split the deskripsi into paragraphs
+                                                                    $paragraphs = explode("\n", $penyakit->Deskripsi_Penyakit);
+                                                                @endphp
 
                                                                 @foreach ($paragraphs as $paragraph)
                                                                     <p>{{ $paragraph }}</p>
