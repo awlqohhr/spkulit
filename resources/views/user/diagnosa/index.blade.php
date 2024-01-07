@@ -29,7 +29,6 @@
                         <h2 class="pb-3 text-center">Formulir Diagnosa Penyakit Kulit</h2>
                         <form action="{{ route('process.diagnosa') }}" method="post"
                             class="row gy-2 gx-3 align-items-center">
-
                             @csrf
                             <div class="col-sm-6">
                                 <label for="nama">Nama Pasien:</label>

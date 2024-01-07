@@ -7,6 +7,7 @@ use App\Models\Diagnosa;
 use App\Models\Gejala;
 use App\Models\Aturan;
 use App\Models\Penyakit;
+use App\Models\HasilDiagnosa;
 
 class DiagnosaController extends Controller
 {
@@ -33,9 +34,19 @@ class DiagnosaController extends Controller
         // Menambahkan logika untuk memproses gejala yang dipilih dan menentukan diagnosa
         $kodePenyakit = $this->diagnosa($gejalas);
 
-        // Menyimpan data diagnosa ke dalam database
+        // Store diagnosis data in the database
         $diagnosa = Diagnosa::create($request->all());
         $diagnosa->update(['kode_penyakit' => $kodePenyakit]);
+
+        // Menyimpan hasil diagnosa ke dalam database
+        $hasilDiagnosa = new HasilDiagnosa();
+        $hasilDiagnosa->nama_pasien = $diagnosa->nama;
+        $hasilDiagnosa->umur = $diagnosa->umur;
+        $hasilDiagnosa->jenis_kelamin = $diagnosa->jenis_kelamin;
+        $hasilDiagnosa->no_telp = $diagnosa->no_telp;
+        $hasilDiagnosa->alamat = $diagnosa->alamat;
+        $hasilDiagnosa->kode_penyakit = $diagnosa->kode_penyakit;
+        $hasilDiagnosa->save();
 
         return redirect()->route('show.diagnosa')->with('success', 'Diagnosa berhasil dilakukan.');
     }
