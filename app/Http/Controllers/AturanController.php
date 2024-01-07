@@ -103,7 +103,6 @@ class AturanController extends Controller
 
     public function getAturanByGejalaCodes($gejalaCodes)
     {
-        // Mendapatkan aturan berdasarkan gejala yang dipilih
         return Aturan::whereIn('Kode_Gejala', $gejalaCodes)->get();
     }
 }
