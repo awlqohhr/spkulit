@@ -35,6 +35,8 @@ class AturanController extends Controller
         // Validasi dan simpan data baru
         $request->validate([
             'Kode_Gejala' => 'required|array',
+            // 'Kode_Gejala.*' => 'exists:gejalas,Kode_Gejala',
+            // 'Kode_Penyakit' => 'required|array',
             'Kode_Penyakit.*' => 'exists:penyakits,Kode_Penyakit',
             // ... tambahkan validasi sesuai kebutuhan
         ]);
@@ -99,5 +101,11 @@ class AturanController extends Controller
     {
         Aturan::findOrFail($id)->delete();
         return redirect()->route('aturan.index')->with('success', 'Aturan berhasil dihapus.');
+    }
+
+    public function getAturanByGejalaCodes($gejalaCodes)
+    {
+        // Mendapatkan aturan berdasarkan gejala yang dipilih
+        return Aturan::whereIn('Kode_Gejala', $gejalaCodes)->get();
     }
 }
