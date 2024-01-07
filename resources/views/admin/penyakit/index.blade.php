@@ -95,8 +95,7 @@
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <label for="Deskripsi_Penyakit">Deskripsi
-                                                            Penyakit</label>
+                                                        <label for="Deskripsi_Penyakit">Deskripsi dan Penanganan</label>
                                                         <textarea class="form-control" id="Deskripsi_Penyakit" name="Deskripsi_Penyakit" rows="4" required></textarea>
                                                     </div>
                                                     <div class="modal-footer">
@@ -122,7 +121,7 @@
                                                         <th data-field="kode_penyakit" style="width: 10%">Kode Penyakit</th>
                                                         <th data-field="gambar">Gambar Penyakit</th>
                                                         <th data-field="nama_penyakit">Nama Penyakit</th>
-                                                        <th data-field="deskirpsi_penyakit">Deskripsi Penyakit</th>
+                                                        <th data-field="deskirpsi_penyakit">Deskripsi dan Penanganan</th>
                                                         <th data-field="aksi" style="width: 10%">Aksi</th>
                                                     </tr>
                                                 </thead>

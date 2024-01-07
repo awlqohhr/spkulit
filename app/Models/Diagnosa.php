@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Diagnosa extends Model
 {
     use HasFactory;
-
+    protected $fillable = ['nama', 'umur', 'jenis_kelamin', 'no_telp', 'alamat'];
 
     public function gejalas()
     {

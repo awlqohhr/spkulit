@@ -27,7 +27,8 @@
                 <div class="card">
                     <div class="card-body">
                         <h2 class="pb-3 text-center">Formulir Diagnosa Penyakit Kulit</h2>
-                        <form action="#" method="post" class="row gy-2 gx-3 align-items-center">
+                        <form action="{{ route('process.diagnosa') }}" method="post"
+                            class="row gy-2 gx-3 align-items-center">
 
                             @csrf
                             <div class="col-sm-6">
@@ -54,20 +55,6 @@
                                 <label for="alamat">Alamat Lengkap:</label>
                                 <input type="text" class="form-control" id="alamat" name="alamat" required>
                             </div>
-                            {{-- <div>
-                                <label>
-                                    <span>Pilihan Gejala:</span>
-                                </label>
-                                <select class="form-select" aria-label="Default select example" name="Kode_Gejala[]"
-                                    required>
-                                    <option value="" disabled selected>Pilih Gejala yang Anda Keluhkan</option>
-                                    @foreach ($gejalas as $gejala)
-                                        <option value="{{ $gejala->Kode_Gejala }}">{{ $gejala->Kode_Gejala }} -
-                                            {{ $gejala->Nama_Gejala }}</option>
-                                    @endforeach
-                                </select>
-                            </div> --}}
-
                             <div>
                                 <label>
                                     <span>Pilihan Gejala:</span>

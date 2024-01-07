@@ -31,6 +31,7 @@ Route::post('/diagnosa', [DiagnosaController::class, 'processForm'])->name('proc
 
 
 
+
 // controller penyakit
 use App\Http\Controllers\PenyakitController;
 

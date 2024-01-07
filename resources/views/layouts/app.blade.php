@@ -81,7 +81,7 @@
                             <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                             <li class="nav-item">
-                                <a href="{{ route('dashboard.user') }}" class="nav-link active">
+                                <a href="{{ route('dashboard.user') }}" class="nav-link">
                                     <i class="nav-icon fas fa-tachometer-alt"></i>
                                     <p>
                                         Dashboard
@@ -89,17 +89,16 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('show.diagnosa') }}" class="nav-link ">
+                                <a href="{{ route('show.diagnosa') }}" class="nav-link">
                                     <i class="nav-icon fas fa-tachometer-alt"></i>
                                     <p>
                                         Diagnosa
                                     </p>
                                 </a>
                             </li>
-
-
                         </ul>
                     </nav>
+
                     <!-- /.sidebar-menu -->
                 </div>
                 <!-- /.sidebar -->
