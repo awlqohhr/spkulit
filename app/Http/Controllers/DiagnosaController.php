@@ -39,11 +39,11 @@ class DiagnosaController extends Controller
         $gejalas = Gejala::whereIn('Kode_Gejala', $gejalaCodes)->get();
 
         // Menambahkan logika untuk memproses gejala yang dipilih dan menentukan diagnosa
-        $kodePenyakit = $this->diagnosa($gejalas);
+        $namaPenyakit = $this->diagnosa($gejalas);
 
         // Store diagnosis data in the database
         $diagnosa = Diagnosa::create($request->all());
-        $diagnosa->update(['Nama_Penyakit' => $kodePenyakit]);
+        $diagnosa->update(['Nama_Penyakit' => $namaPenyakit]);
 
         // Menyimpan hasil diagnosa ke dalam database
         $hasilDiagnosa = new HasilDiagnosa();
