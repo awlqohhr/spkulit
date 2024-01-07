@@ -8,6 +8,8 @@ use App\Models\Gejala;
 use App\Models\Aturan;
 use App\Models\Penyakit;
 use App\Models\HasilDiagnosa;
+use App\Http\Controllers\AturanController;
+
 
 class DiagnosaController extends Controller
 {
@@ -38,7 +40,7 @@ class DiagnosaController extends Controller
         $gejalaCodes = $request->input('Kode_Gejala');
         $gejalas = Gejala::whereIn('Kode_Gejala', $gejalaCodes)->get();
 
-        // Process gejala and determine the diagnosis using AturanController
+        // Panggil metode diagnosa untuk mendapatkan kode penyakit
         $kodePenyakit = $this->diagnosa($gejalas);
 
         // Store diagnosis data in the database
@@ -55,7 +57,7 @@ class DiagnosaController extends Controller
         $hasilDiagnosa->alamat = $diagnosa->alamat;
 
         // Pastikan Kode_Penyakit memiliki nilai sebelum menyimpan
-        $hasilDiagnosa->kode_penyakit = $diagnosa->Kode_Penyakit ?? 'Tidak diketahui';
+        $hasilDiagnosa->Kode_Penyakit = $diagnosa->Kode_Penyakit ?? 'Tidak diketahui';
 
         $hasilDiagnosa->save();
 
