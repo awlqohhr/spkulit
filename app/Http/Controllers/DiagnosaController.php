@@ -38,7 +38,7 @@ class DiagnosaController extends Controller
         $gejalaCodes = $request->input('Kode_Gejala');
         $gejalas = Gejala::whereIn('Kode_Gejala', $gejalaCodes)->get();
 
-        // Menambahkan logika untuk memproses gejala yang dipilih dan menentukan diagnosa
+        // Process gejala and determine the diagnosis using AturanController
         $namaPenyakit = $this->diagnosa($gejalas);
 
         // Store diagnosis data in the database
@@ -47,12 +47,16 @@ class DiagnosaController extends Controller
 
         // Menyimpan hasil diagnosa ke dalam database
         $hasilDiagnosa = new HasilDiagnosa();
+
         $hasilDiagnosa->nama = $diagnosa->nama;
         $hasilDiagnosa->umur = $diagnosa->umur;
         $hasilDiagnosa->jenis_kelamin = $diagnosa->jenis_kelamin;
         $hasilDiagnosa->no_telp = $diagnosa->no_telp;
         $hasilDiagnosa->alamat = $diagnosa->alamat;
-        $hasilDiagnosa->Nama_Penyakit = $diagnosa->Nama_Penyakit;
+
+        // Pastikan Nama_Penyakit memiliki nilai sebelum menyimpan
+        $hasilDiagnosa->Nama_Penyakit = $diagnosa->Nama_Penyakit ?? 'Tidak diketahui';
+
         $hasilDiagnosa->save();
 
         return redirect()->route('show.diagnosa')->with('success', 'Diagnosa berhasil dilakukan.');
@@ -68,13 +72,13 @@ class DiagnosaController extends Controller
     {
         $gejalaCodes = $gejalas->pluck('Kode_Gejala');
 
-        // Mendapatkan aturan berdasarkan gejala yang dipilih
+        // Get aturan based on selected gejala
         $aturans = $this->aturanController->getAturanByGejalaCodes($gejalaCodes);
 
-        // Menghitung jumlah kemunculan setiap penyakit
-        $penyakitCounts = $aturans->groupBy('Nama_Penyakit')->map->count();
+        // Count occurrences of each penyakit
+        $penyakitCounts = $aturans->groupBy('Kode_Penyakit')->map->count();
 
-        // Menentukan penyakit yang paling sering muncul
+        // Determine the most frequent penyakit
         $mostFrequentPenyakit = $penyakitCounts->sortDesc()->keys()->first();
 
         return $mostFrequentPenyakit;

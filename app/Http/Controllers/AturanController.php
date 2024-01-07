@@ -35,8 +35,6 @@ class AturanController extends Controller
         // Validasi dan simpan data baru
         $request->validate([
             'Kode_Gejala' => 'required|array',
-            // 'Kode_Gejala.*' => 'exists:gejalas,Kode_Gejala',
-            // 'Kode_Penyakit' => 'required|array',
             'Kode_Penyakit.*' => 'exists:penyakits,Kode_Penyakit',
             // ... tambahkan validasi sesuai kebutuhan
         ]);
