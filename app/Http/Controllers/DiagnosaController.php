@@ -61,13 +61,7 @@ class DiagnosaController extends Controller
 
         $hasilDiagnosa->save();
 
-        return redirect()->route('show.diagnosa')->with('success', 'Diagnosa berhasil dilakukan.');
-    }
-
-    public function viewDiagnosa($id)
-    {
-        $diagnosa = HasilDiagnosa::findOrFail($id);
-        return view('user.diagnosa.hasil', compact('diagnosa'));
+        return redirect()->route('hasil.diagnosa', ['id' => $hasilDiagnosa->id])->with('success', 'Diagnosa berhasil dilakukan.');
     }
 
     private function diagnosa($gejalas)
@@ -84,5 +78,11 @@ class DiagnosaController extends Controller
         $mostFrequentPenyakit = $penyakitCounts->sortDesc()->keys()->first();
 
         return $mostFrequentPenyakit;
+    }
+
+    public function showHasilDiagnosa($id)
+    {
+        $diagnosa = HasilDiagnosa::findOrFail($id);
+        return view('user.diagnosa.hasil', compact('diagnosa'));
     }
 }
