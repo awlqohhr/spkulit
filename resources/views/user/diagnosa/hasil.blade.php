@@ -23,17 +23,17 @@
                         <p><strong>Alamat Lengkap:</strong> {{ $diagnosa->alamat }}</p>
 
                         <h3 class="pt-3">Hasil Diagnosa:</h3>
-                        @if ($diagnosa->kode_penyakit)
-                            <p>Anda mungkin mengalami penyakit dengan kode: <strong>{{ $diagnosa->kode_penyakit }}</strong>
+                        @if ($diagnosa->Kode_Penyakit)
+                            <p>Anda mungkin mengalami penyakit dengan kode: <strong>{{ $diagnosa->Kode_Penyakit }}</strong>
                             </p>
 
                             <h4>Informasi Penyakit:</h4>
                             @php
-                                $penyakit = App\Models\Penyakit::where('kode_penyakit', $diagnosa->kode_penyakit)->first();
+                                $penyakit = App\Models\Penyakit::where('Kode_Penyakit', $diagnosa->Kode_Penyakit)->first();
                             @endphp
 
                             @if ($penyakit)
-                                <p><strong>Nama Penyakit:</strong> {{ $penyakit->nama_penyakit }}</p>
+                                <p><strong>Nama Penyakit:</strong> {{ $penyakit->Nama_Penyakit }}</p>
                                 <p><strong>Deskripsi:</strong> {{ $penyakit->deskripsi }}</p>
                                 <!-- Tambahkan informasi lainnya sesuai kebutuhan -->
                             @else

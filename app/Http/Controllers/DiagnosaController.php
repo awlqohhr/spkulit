@@ -36,7 +36,7 @@ class DiagnosaController extends Controller
 
         // Store diagnosis data in the database
         $diagnosa = Diagnosa::create($request->all());
-        $diagnosa->update(['Kode_Penyakit' => $kodePenyakit]);
+        $diagnosa->update(['Nama_Penyakit' => $kodePenyakit]);
 
         // Menyimpan hasil diagnosa ke dalam database
         $hasilDiagnosa = new HasilDiagnosa();
@@ -45,7 +45,7 @@ class DiagnosaController extends Controller
         $hasilDiagnosa->jenis_kelamin = $diagnosa->jenis_kelamin;
         $hasilDiagnosa->no_telp = $diagnosa->no_telp;
         $hasilDiagnosa->alamat = $diagnosa->alamat;
-        $hasilDiagnosa->Kode_Penyakit = $diagnosa->Kode_Penyakit;
+        $hasilDiagnosa->Nama_Penyakit = $diagnosa->Nama_Penyakit;
         $hasilDiagnosa->save();
 
         return redirect()->route('show.diagnosa')->with('success', 'Diagnosa berhasil dilakukan.');
@@ -59,7 +59,7 @@ class DiagnosaController extends Controller
         $aturans = Aturan::whereIn('Kode_Gejala', $gejalaCodes)->get();
 
         // Menghitung jumlah kemunculan setiap penyakit
-        $penyakitCounts = $aturans->groupBy('Kode_Penyakit')->map->count();
+        $penyakitCounts = $aturans->groupBy('Nama_Penyakit')->map->count();
 
         // Menentukan penyakit yang paling sering muncul
         $mostFrequentPenyakit = $penyakitCounts->sortDesc()->keys()->first();
