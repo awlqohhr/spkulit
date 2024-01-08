@@ -55,23 +55,24 @@
                                 <input type="text" class="form-control" id="alamat" name="alamat" required>
                             </div>
                             <div>
-                                <label for="pilihan_gejala">
+                                <label>
                                     <span>Pilihan Gejala:</span>
                                 </label>
                                 <div class="row">
-                                    <div class="col-md-12">
-                                        <select name="Kode_Gejala[]" id="pilihan_gejala" class="form-select" required>
-                                            <option value="Pilih gejalanya" disabled selected>Pilih gejalanya</option>
-                                            @foreach ($gejalas as $gejala)
-                                                <option value="{{ $gejala->Kode_Gejala }}">
-                                                    {{ $gejala->Kode_Gejala }} - {{ $gejala->Nama_Gejala }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+                                    @foreach ($gejalas as $gejala)
+                                        <div class="col-md-4">
+                                            <div class="form-check">
+                                                <input type="checkbox" name="Kode_Gejala[]" class="form-check-input"
+                                                    value="{{ $gejala->Kode_Gejala }}">
+                                                <label class="form-check-label">{{ $gejala->Kode_Gejala }} <span>-</span>
+                                                    {{ $gejala->Nama_Gejala }}</label>
+                                            </div>
+                                        </div>
+                                    @endforeach
                                 </div>
                             </div>
-                            <div class="pt-2">
+
+                            <div class="">
                                 <button type="submit" class="btn btn-primary">Diagnosa</button>
                             </div>
                         </form>
