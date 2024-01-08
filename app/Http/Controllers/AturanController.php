@@ -58,7 +58,7 @@ class AturanController extends Controller
 
     public function show($id)
     {
-        $aturans = Aturan::with(['penyakits', 'gejalas'])->findOrFail($id);
+        $aturans = Aturan::with(['penyakit', 'gejala'])->where('Kode_Penyakit', $id)->get();
         return view('admin.aturan.show', compact('aturans'));
     }
 
