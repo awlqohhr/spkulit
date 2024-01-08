@@ -55,10 +55,15 @@ class DiagnosaController extends Controller
         $hasilDiagnosa->alamat = $diagnosa->alamat;
 
         // Pastikan Kode_Penyakit memiliki nilai sebelum menyimpan
-        $hasilDiagnosa->Kode_Penyakit = $diagnosa->Kode_Penyakit ?? 'Tidak diketahui';
+        $hasilDiagnosa->Kode_Penyakit = $kodePenyakit;
 
         $hasilDiagnosa->save();
 
+        // Panggil metode forwardChaining untuk mendapatkan hasil inferensi
+        $this->aturanController->forwardChaining($gejalaCodes);
+
+
+        // Redirect ke halaman hasil diagnosa dengan ID hasil diagnosa
         return redirect()->route('hasil.diagnosa', ['id' => $hasilDiagnosa->id])->with('success', 'Diagnosa berhasil dilakukan.');
     }
 
@@ -83,9 +88,11 @@ class DiagnosaController extends Controller
 
         // Iterasi setiap aturan untuk melakukan inferensi
         foreach ($aturans as $aturan) {
-            $gejalaRule = $aturan->gejala;
+            $gejalaRule = explode(',', $aturan->gejala);
 
-            // Check apakah semua gejala aturan terpenuhi
+            // Tambahkan pengecekan dengan dd() atau var_dump() di sini
+            // dd($gejalaRule, $fakta);
+
             if ($this->checkFakta($gejalaRule, $fakta)) {
                 $hasilInferensi[$aturan->Kode_Penyakit] = true;
             }
@@ -100,7 +107,7 @@ class DiagnosaController extends Controller
         }
 
         // Kembalikan penyakit dengan prioritas tertinggi (berdasarkan aturan)
-        return $penyakitCodes[0];
+        return implode(',', $penyakitCodes);
     }
 
     private function checkFakta($gejalaRule, $fakta)

@@ -106,6 +106,51 @@ class AturanController extends Controller
     public function getAturanByGejalaCodes($gejalaCodes)
     {
         // Mendapatkan aturan berdasarkan gejala yang dipilih
-        return Aturan::whereIn('Kode_Gejala', $gejalaCodes)->get();
+        $aturans = Aturan::whereIn('Kode_Gejala', $gejalaCodes)->get();
+
+        return $aturans;
+    }
+
+    public function forwardChaining($gejalaCodes)
+    {
+        $fakta = [];
+
+        foreach ($gejalaCodes as $gejalaCode) {
+            $fakta[$gejalaCode] = true;
+        }
+
+        $hasilInferensi = [];
+
+        $aturans = Aturan::all();
+
+        foreach ($aturans as $aturan) {
+            $gejalaRule = explode(',', $aturan->gejala);
+
+            if ($this->checkFakta($gejalaRule, $fakta)) {
+                $hasilInferensi[$aturan->Kode_Penyakit] = true;
+            }
+        }
+
+        $penyakitCodes = array_keys($hasilInferensi);
+
+        if (empty($penyakitCodes)) {
+            return 'Tidak diketahui';
+        }
+
+        return implode(',', $penyakitCodes);
+    }
+
+
+
+
+    private function checkFakta($gejalaRule, $fakta)
+    {
+        foreach ($gejalaRule as $gejala) {
+            if (!isset($fakta[$gejala]) || !$fakta[$gejala]) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
