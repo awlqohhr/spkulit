@@ -110,6 +110,7 @@ class DiagnosaController extends Controller
         return implode(',', $penyakitCodes);
     }
 
+
     private function checkFakta($gejalaRule, $fakta)
     {
         // Check apakah semua gejala aturan terpenuhi
