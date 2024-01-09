@@ -15,11 +15,9 @@
                         <strong>Nama Gejala:</strong> <br> {{ $aturans->pluck('gejala.Nama_Gejala')->implode(', ') }}
                         <br>
                         <strong>Kode Penyakit:</strong> <br> {{ $kodePenyakit }} <br>
-                        <strong>Nama Penyakit:</strong> <br> {{ $aturans->last()->penyakit->Nama_Penyakit }} <br>
-                        <strong>Deskripsi dan Penanganan:</strong> <br> {!! nl2br(e($aturans->last()->penyakit->Deskripsi_Penyakit)) !!}
+                        <strong>Nama Penyakit:</strong> <br> {{ $aturans->first()->penyakit->Nama_Penyakit }} <br>
+                        <strong>Deskripsi dan Penanganan:</strong> <br> {!! nl2br(e($aturans->first()->penyakit->Deskripsi_Penyakit)) !!}
                     </div>
-
-                    {{-- Add other fields as needed --}}
                 @else
                     No data available.
                 @endif

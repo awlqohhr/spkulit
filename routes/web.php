@@ -69,7 +69,7 @@ Route::get('/aturan/create', [AturanController::class, 'create'])->name('aturan.
 // Menyimpan data aturan baru
 Route::post('/aturan', [AturanController::class, 'store'])->name('aturan.store');
 // Menampilkan detail aturan
-Route::get('/aturan/{aturan}', [AturanController::class, 'show'])->name('aturan.show');
+Route::get('/aturan/{id}', [AturanController::class, 'show'])->name('aturan.show');
 
 // Menampilkan formulir edit aturan
 // Route::get('/aturan/{aturan}/edit', [AturanController::class, 'edit'])->name('aturan.edit');
@@ -78,4 +78,3 @@ Route::get('/aturan/{aturan}', [AturanController::class, 'show'])->name('aturan.
 // Menghapus aturan
 // Route::delete('/aturan/{aturan}', [AturanController::class, 'destroy'])->name('aturan.destroy');
 Route::delete('aturan/{kodePenyakit}', [AturanController::class, 'destroy'])->name('aturan.destroy');
-Route::get('aturan/show/{kodePenyakit}', 'AturanController@showDetails')->name('aturan.showDetails');
