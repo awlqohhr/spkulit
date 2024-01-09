@@ -76,4 +76,6 @@ Route::get('/aturan/{aturan}', [AturanController::class, 'show'])->name('aturan.
 //     // Menyimpan perubahan pada aturan
 // Route::put('/aturan/{aturan}', [AturanController::class, 'update'])->name('aturan.update');
 // Menghapus aturan
-Route::delete('/aturan/{aturan}', [AturanController::class, 'destroy'])->name('aturan.destroy');
+// Route::delete('/aturan/{aturan}', [AturanController::class, 'destroy'])->name('aturan.destroy');
+Route::delete('aturan/{kodePenyakit}', [AturanController::class, 'destroy'])->name('aturan.destroy');
+Route::get('aturan/show/{kodePenyakit}', 'AturanController@showDetails')->name('aturan.showDetails');

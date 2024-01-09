@@ -25,20 +25,8 @@ class Aturan extends Model
         return $this->belongsTo(Penyakit::class, 'Kode_Penyakit', 'Kode_Penyakit');
     }
 
-    public function gejalas()
-    {
-        return $this->belongsToMany(Gejala::class, 'aturan_gejala', 'aturan_id', 'gejala_id');
-    }
-
     public function gejala()
     {
         return $this->belongsTo(Gejala::class, 'Kode_Gejala', 'Kode_Gejala');
     }
-
-    // public function gejala()
-    // {
-    //     return $this->hasMany(Gejala::class, 'Kode_Penyakit', 'Kode_Penyakit')
-    //             ->where('aturans.Kode_Gejala', $this->Kode_Gejala)
-    //             ->where('aturans.id', '!=', $this->id);
-    // }
 }

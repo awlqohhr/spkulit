@@ -126,7 +126,8 @@
                                                                         <!-- Button trigger modal -->
                                                                         <button type="button" class="btn btn-info"
                                                                             data-bs-toggle="modal"
-                                                                            data-bs-target="#aturanshowModal">
+                                                                            data-bs-target="#aturanshowModal"
+                                                                            data-id="{{ $kodePenyakit }}">
                                                                             <i class="bi bi-eye-fill"></i>
                                                                         </button>
                                                                         <button type="button" class="btn btn-warning"
@@ -135,15 +136,14 @@
                                                                             <i class="bi bi-pencil-fill"></i>
                                                                         </button>
                                                                         <form
-                                                                            action="{{ route('aturan.destroy', $aturans->first()->id) }}"
+                                                                            action="{{ route('aturan.destroy', $kodePenyakit) }}"
                                                                             method="POST" style="display: inline;">
                                                                             @csrf
                                                                             @method('DELETE')
                                                                             <button type="submit" class="btn btn-danger"
-                                                                                onclick="return confirm('Yakin ingin menghapus?')">
-                                                                                Hapus
-                                                                            </button>
+                                                                                onclick="return confirm('Yakin ingin menghapus? {{ $kodePenyakit }}')">Hapus</button>
                                                                         </form>
+
                                                                     </td>
                                                                 </tr>
                                                             @empty

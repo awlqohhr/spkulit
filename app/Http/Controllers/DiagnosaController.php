@@ -67,47 +67,6 @@ class DiagnosaController extends Controller
         return redirect()->route('hasil.diagnosa', ['id' => $hasilDiagnosa->id])->with('success', 'Diagnosa berhasil dilakukan.');
     }
 
-    // private function diagnosa($gejalas)
-    // {
-    //     // Ambil Kode_Gejala dari gejala yang dipilih
-    //     $gejalaCodes = $gejalas->pluck('Kode_Gejala')->toArray();
-
-    //     // Inisialisasi array untuk menyimpan fakta
-    //     $fakta = [];
-
-    //     // Iterasi gejalaCodes untuk menentukan nilai fakta
-    //     foreach ($gejalaCodes as $gejalaCode) {
-    //         $fakta[$gejalaCode] = true;
-    //     }
-
-    //     // Inisialisasi array untuk menyimpan hasil dari inferensi
-    //     $hasilInferensi = [];
-
-    //     // Ambil semua aturan berdasarkan gejala yang dipilih
-    //     $aturans = $this->aturanController->getAturanByGejalaCodes($gejalaCodes);
-
-    //     // Iterasi setiap aturan untuk melakukan inferensi
-    //     foreach ($aturans as $aturan) {
-    //         // Tambahkan pengecekan dengan dd() atau var_dump() di sini
-    //         dd($aturan->Kode_Gejala, $fakta);
-
-    //         if ($this->checkFakta($aturan->Kode_Gejala, $fakta)) {
-    //             $hasilInferensi[$aturan->Kode_Penyakit] = true;
-    //         }
-    //     }
-
-    //     // Ambil Penyakit yang memiliki hasil inferensi
-    //     $penyakitCodes = array_keys($hasilInferensi);
-
-    //     // Jika tidak ada hasil inferensi, kembalikan 'Tidak diketahui'
-    //     if (empty($penyakitCodes)) {
-    //         return 'Tidak diketahui';
-    //     }
-
-    //     // Kembalikan penyakit dengan prioritas tertinggi (berdasarkan aturan)
-    //     return implode(',', $penyakitCodes);
-    // }
-
     private function diagnosa($gejalas)
     {
         // Ambil Kode_Gejala dari gejala yang dipilih
@@ -122,49 +81,47 @@ class DiagnosaController extends Controller
         }
 
         // Inisialisasi array untuk menyimpan hasil dari inferensi
-        $hasilInferensi = [];
+        $hasilInferensi = "";
 
         // Ambil semua aturan berdasarkan gejala yang dipilih
         $aturans = $this->aturanController->getAturanByGejalaCodes($gejalaCodes);
 
-
         // Iterasi setiap aturan untuk melakukan inferensi
         foreach ($aturans as $aturan) {
-            // Tambahkan pengecekan dengan dd() atau var_dump() di sini
-            dd($aturan);
+            $inferensiResult = $this->checkFakta($aturan->gejalaRule, $fakta);
 
-            if ($this->checkFakta($aturan->Kode_Gejala, $fakta)) {
-                $hasilInferensi[] = $aturan->Kode_Penyakit;
+            if ($inferensiResult) {
+                $hasilInferensi = $aturan->Kode_Penyakit;
             }
         }
 
-        // Jika tidak ada hasil inferensi, kembalikan 'Tidak diketahui'
-        if (empty($hasilInferensi)) {
-            return 'Tidak diketahui';
+        if (isset($aturan)) {
+            $hasilInferensi = $aturan->Kode_Penyakit;
+        } else {
+            $hasilInferensi = "Tidak ditemukan";
         }
 
         // Kembalikan array penyakit dengan prioritas tertinggi (berdasarkan aturan)
         return $hasilInferensi;
     }
 
-
     private function checkFakta($gejalaRule, $fakta)
     {
         // Check if $gejalaRule is an array
         if (!is_array($gejalaRule)) {
-            // Handle the error or return false, depending on your logic
             return false;
         }
 
         // Check apakah semua gejala aturan terpenuhi
-        foreach ($gejalaRule as $gejala) {
-            if (!isset($fakta[$gejala]) || !$fakta[$gejala]) {
+        foreach ($gejalaRule as $gejalaCode) {
+            if (!isset($fakta[$gejalaCode]) || !$fakta[$gejalaCode]) {
                 return false;
             }
         }
 
         return true;
     }
+
 
     public function showHasilDiagnosa($id)
     {
