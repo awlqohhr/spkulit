@@ -8,15 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Diagnosa extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'nama_pasien',
-        'alamat_pasien',
-        'Kode_Penyakit',
-        // tambahkan field lain yang diperlukan
-    ];
+    protected $fillable = ['nama', 'umur', 'jenis_kelamin', 'no_telp', 'alamat'];
 
-    public function penyakit()
+    public function gejalas()
     {
-        return $this->belongsTo(Penyakit::class);
+        return $this->belongsToMany(Gejala::class, 'diagnosa_gejala', 'diagnosa_id', 'gejala_id');
     }
 }

@@ -45,7 +45,7 @@
                                         <!-- Modal -->
                                         <div class="modal fade" id="aturanModal" tabindex="-1"
                                             aria-labelledby="aturanModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
+                                            <div class="modal-dialog modal-lg">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <h1 class="modal-title fs-5" id="aturanModalLabel">Tambah Data
@@ -59,14 +59,16 @@
                                                             <div class="form-group">
                                                                 <label for="Kode_Gejala">Pilih Gejala:</label>
                                                                 <div class="row">
-                                                                    @foreach ($gejalas as $gejala)
+                                                                    @foreach ($gejalas->sortBy('Kode_Gejala') as $gejala)
                                                                         <div class="col-md-4">
                                                                             <div class="form-check">
                                                                                 <input type="checkbox" name="Kode_Gejala[]"
                                                                                     class="form-check-input"
                                                                                     value="{{ $gejala->Kode_Gejala }}">
-                                                                                <label
-                                                                                    class="form-check-label">{{ $gejala->Kode_Gejala }}</label>
+                                                                                <label class="form-check-label">
+                                                                                    {{ $gejala->Kode_Gejala }} -
+                                                                                    {{ $gejala->Nama_Gejala }}
+                                                                                </label>
                                                                             </div>
                                                                         </div>
                                                                     @endforeach
@@ -77,9 +79,11 @@
                                                                 <select name="Kode_Penyakit" class="form-control" required>
                                                                     <option value="" selected disabled>-- Pilih
                                                                         Penyakit --</option>
-                                                                    @foreach ($penyakits as $penyakit)
+                                                                    @foreach ($penyakits->sortBy('Kode_Penyakit') as $penyakit)
                                                                         <option value="{{ $penyakit->Kode_Penyakit }}">
-                                                                            {{ $penyakit->Kode_Penyakit }}</option>
+                                                                            {{ $penyakit->Kode_Penyakit }} -
+                                                                            {{ $penyakit->Nama_Penyakit }}
+                                                                        </option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>
@@ -96,38 +100,50 @@
                                         <div class="card-body">
                                             <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
                                                 <!-- Tabel gejala -->
-                                                <div class="table-responsive">
+                                                <div class="table-responsive text-center">
                                                     <table id="tabelaturan" class="table table-bordered compact stripe"
-                                                        style="width:100%">
+                                                        style="width: 90%;">
                                                         <thead>
                                                             <tr>
-                                                                <th style="width:3%">No</th>
+                                                                <th style="width:5%">No</th>
                                                                 <th>Gejala</th>
                                                                 <th>Penyakit</th>
-                                                                <th style="width:10%">Aksi</th>
+                                                                <th style="width:15%">Aksi</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @forelse($data as $aturan)
+                                                            @php
+                                                                $groupedData = $data->groupBy('Kode_Penyakit');
+                                                            @endphp
+
+                                                            @forelse($groupedData as $kodePenyakit => $aturans)
                                                                 <tr>
-                                                                    <td>{{ $aturan->field1 }}</td>
-                                                                    <td>{{ $aturan->field2 }}</td>
-                                                                    <!-- Tambahkan kolom sesuai kebutuhan -->
+                                                                    <td>{{ $loop->iteration }}</td>
+                                                                    <td>{{ $aturans->pluck('Kode_Gejala')->implode(', ') }}
+                                                                    </td>
+                                                                    <td>{{ $kodePenyakit }}</td>
                                                                     <td>
-                                                                        <a href="{{ route('aturan.show', $aturan->id) }}"
-                                                                            class="btn btn-info"><i
-                                                                                class="bi bi-eye-fill"></i></a>
-                                                                        <a href="{{ route('aturan.edit', $aturan->id) }}"
-                                                                            class="btn btn-warning"><i
-                                                                                class="bi bi-pencil-fill"></i></a>
+                                                                        <!-- Button trigger modal -->
+                                                                        <button type="button" class="btn btn-info"
+                                                                            data-bs-toggle="modal"
+                                                                            data-bs-target="#aturanshowModal"
+                                                                            data-id="{{ $kodePenyakit }}">
+                                                                            <i class="bi bi-eye-fill"></i>
+                                                                        </button>
+                                                                        <button type="button" class="btn btn-warning"
+                                                                            data-bs-toggle="modal"
+                                                                            data-bs-target="#aturaneditModal">
+                                                                            <i class="bi bi-pencil-fill"></i>
+                                                                        </button>
                                                                         <form
-                                                                            action="{{ route('aturan.destroy', $aturan->id) }}"
+                                                                            action="{{ route('aturan.destroy', $kodePenyakit) }}"
                                                                             method="POST" style="display: inline;">
                                                                             @csrf
                                                                             @method('DELETE')
                                                                             <button type="submit" class="btn btn-danger"
-                                                                                onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
+                                                                                onclick="return confirm('Yakin ingin menghapus? {{ $kodePenyakit }}')">Hapus</button>
                                                                         </form>
+
                                                                     </td>
                                                                 </tr>
                                                             @empty
@@ -138,6 +154,10 @@
                                                         </tbody>
                                                     </table>
                                                     <!-- Pagination -->
+
+                                                    @include('admin.aturan.show')
+
+                                                    @include('admin.aturan.edit')
 
                                                 </div>
                                             </div><!-- /.container-fluid -->

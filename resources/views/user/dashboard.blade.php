@@ -24,74 +24,13 @@
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
-                <!-- Small boxes (Stat box) -->
-                <div class="row">
-                    <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <div class="small-box bg-info">
-                            <div class="inner">
-                                <h3>150</h3>
-
-                                <p>New Orders</p>
-                            </div>
-                            <div class="icon">
-                                <i class="ion ion-bag"></i>
-                            </div>
-                            <a href="#" class="small-box-footer">More info <i
-                                    class="fas fa-arrow-circle-right"></i></a>
-                        </div>
+                <div class="container">
+                    <div class="text-center">
+                        <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">Selamat Datang</h1>
+                        <h3>Sistem Pakar Penyakit Kulit</h3>
+                        <h6>Di Puskesmas Tanggulangin</h6>
                     </div>
-                    <!-- ./col -->
-                    <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <div class="small-box bg-success">
-                            <div class="inner">
-                                <h3>53<sup style="font-size: 20px">%</sup></h3>
-
-                                <p>Bounce Rate</p>
-                            </div>
-                            <div class="icon">
-                                <i class="ion ion-stats-bars"></i>
-                            </div>
-                            <a href="#" class="small-box-footer">More info <i
-                                    class="fas fa-arrow-circle-right"></i></a>
-                        </div>
-                    </div>
-                    <!-- ./col -->
-                    <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <div class="small-box bg-warning">
-                            <div class="inner">
-                                <h3>44</h3>
-
-                                <p>User Registrations</p>
-                            </div>
-                            <div class="icon">
-                                <i class="ion ion-person-add"></i>
-                            </div>
-                            <a href="#" class="small-box-footer">More info <i
-                                    class="fas fa-arrow-circle-right"></i></a>
-                        </div>
-                    </div>
-                    <!-- ./col -->
-                    <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <div class="small-box bg-danger">
-                            <div class="inner">
-                                <h3>65</h3>
-
-                                <p>Unique Visitors</p>
-                            </div>
-                            <div class="icon">
-                                <i class="ion ion-pie-graph"></i>
-                            </div>
-                            <a href="#" class="small-box-footer">More info <i
-                                    class="fas fa-arrow-circle-right"></i></a>
-                        </div>
-                    </div>
-                    <!-- ./col -->
                 </div>
-                <!-- /.row -->
                 <!-- Main -->
                 <div class="container">
                     <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
@@ -101,7 +40,7 @@
                                 loading="lazy">
                         </div>
                         <div class="col-lg-6">
-                            <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">Penyakit Kulit</h1>
+                            <h4 class="text-body-emphasis lh-1 mb-3">Penyakit Kulit</h4>
                             <p class="lead">Penyakit kulit ada beragam dengan penyebab yang bervariasi pula. Ada penyakit
                                 kulit yang disebabkan oleh reaksi alergi, ada pula yang terjadi karena infeksi jamur hingga
                                 bakteri. Begitu pun dengan gejalanya, dari penyakit kulit yang ringan hingga berat. Oleh
@@ -111,7 +50,8 @@
                                 virus, dan sinar matahari, membantu mengatur suhu tubuh, merasakan sensasi sentuhan dan
                                 nyeri, serta menghasilkan vitamin D.</p>
                             <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                                <button type="button" class="btn btn-outline-secondary btn-lg px-4">Diagnosa</button>
+                                <a type="button" href="{{ route('show.diagnosa') }}"
+                                    class="btn btn-outline-secondary btn-lg px-4">Lakukan Diagnosa</a>
                             </div>
                         </div>
                     </div>

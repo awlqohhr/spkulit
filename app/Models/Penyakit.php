@@ -14,6 +14,6 @@ class Penyakit extends Model
     // Assuming you have a pivot table named penyakit_gejala
     public function gejalas()
     {
-        return $this->belongsToMany(Gejala::class, 'penyakit_gejala', 'penyakit_id', 'gejala_id');
+        return $this->hasMany(Gejala::class, 'Kode_Penyakit', 'Kode_Penyakit');
     }
 }

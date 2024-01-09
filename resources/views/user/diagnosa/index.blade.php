@@ -27,37 +27,53 @@
                 <div class="card">
                     <div class="card-body">
                         <h2 class="pb-3 text-center">Formulir Diagnosa Penyakit Kulit</h2>
-                        <form action="{{ route('hasil.diagnosa') }}" method="post"
+                        <form action="{{ route('process.diagnosa') }}" method="post"
                             class="row gy-2 gx-3 align-items-center">
-
                             @csrf
                             <div class="col-sm-6">
                                 <label for="nama">Nama Pasien:</label>
                                 <input type="text" class="form-control" id="nama" name="nama" required>
                             </div>
+                            <div class="col-sm-2">
+                                <label for="umur">Umur:</label>
+                                <input type="number" class="form-control" id="umur" name="umur" required>
+                            </div>
                             <div class="col-sm-6">
-                                <label for="alamat">Alamat Pasien:</label>
+                                <label for="jenis_kelamin">Jenis Kelamin:</label>
+                                <select class="form-control" id="jenis_kelamin" name="jenis_kelamin" required>
+                                    <option value="" disabled selected>Pilih Jenis Kelamin</option>
+                                    <option value="Laki-laki">Laki-laki</option>
+                                    <option value="Perempuan">Perempuan</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="no_telp">Nomor Telepon:</label>
+                                <input type="tel" class="form-control" id="no_telp" name="no_telp">
+                            </div>
+                            <div class="col-sm-12">
+                                <label for="alamat">Alamat Lengkap:</label>
                                 <input type="text" class="form-control" id="alamat" name="alamat" required>
                             </div>
-                            <label>
-                                <span>Pilihan Gejala:</span>
-                            </label>
-                            <div class="col-sm-6">
-                                <div class="px-5">
+                            <div>
+                                <label>
+                                    <span>Pilihan Gejala:</span>
+                                </label>
+                                <div class="row">
                                     @foreach ($gejalas as $gejala)
-                                        <input class="form-check-input" type="checkbox" value="{{ $gejala->Nama_Gejala }}"
-                                            id="gejala" name="gejala[]">
-                                        <option value="{{ $gejala->id }}"><label for="gejala">
-                                                <p>{{ $gejala->Kode_Gejala }}</p>
-                                                - {{ $gejala->Nama_Gejala }}
-                                            </label>
-                                        </option>
+                                        <div class="col-md-4">
+                                            <div class="form-check">
+                                                <input type="checkbox" name="Kode_Gejala[]" class="form-check-input"
+                                                    value="{{ $gejala->Kode_Gejala }}">
+                                                <label class="form-check-label">{{ $gejala->Kode_Gejala }} <span>-</span>
+                                                    {{ $gejala->Nama_Gejala }}</label>
+                                            </div>
+                                        </div>
                                     @endforeach
                                 </div>
                             </div>
 
                             <div class="">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" class="btn btn-primary">Diagnosa</button>
                             </div>
                         </form>
                     </div>

@@ -28,9 +28,9 @@ class PenyakitController extends Controller
             'Deskripsi_Penyakit' => 'required',
         ]);
 
-         // Handle image upload
+        // Handle image upload
         if ($request->hasFile('Gambar_Penyakit')) {
-            $imagePath = $request->file('Gambar_Penyakit')->store('gambar_penyakit', 'public');
+            $imagePath = $request->file('Gambar_Penyakit')->store('public');
             $validatedData['Gambar_Penyakit'] = $imagePath;
         }
 
@@ -49,44 +49,44 @@ class PenyakitController extends Controller
         return view('penyakit.edit', compact('penyakit'));
     }
 
-   
+
     public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
-            'Kode_Penyakit' => 'required|unique:penyakits,Kode_Penyakit,'.$id,
+            'Kode_Penyakit' => 'required|unique:penyakits,Kode_Penyakit,' . $id,
             'Gambar_Penyakit' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'Nama_Penyakit' => 'required|string|max:255',
             'Deskripsi_Penyakit' => 'required',
         ]);
-    
+
         $penyakit = Penyakit::findOrFail($id);
-    
+
         // Update data fields
         $penyakit->update([
             'Kode_Penyakit' => $validatedData['Kode_Penyakit'],
             'Nama_Penyakit' => $validatedData['Nama_Penyakit'],
             'Deskripsi_Penyakit' => $validatedData['Deskripsi_Penyakit'],
         ]);
-    
+
         // Handle image update
         if ($request->hasFile('Gambar_Penyakit')) {
             // Delete old image if needed
             if ($penyakit->Gambar_Penyakit) {
-                Storage::delete('public/image/penyakit' . $penyakit->Gambar_Penyakit);
+                Storage::delete('Gambar_Penyakit' . $penyakit->Gambar_Penyakit);
             }
-    
+
             // Save new image
-            $imagePath = $request->file('Gambar_Penyakit')->store('public');
-    
+            $imagePath = $request->file('Gambar_Penyakit')->store('public/gambar_penyakit');
+
             // Update the model with the new image path
             $penyakit->update([
                 'Gambar_Penyakit' => basename($imagePath),
             ]);
         }
-    
+
         return redirect()->route('penyakit.index')->with('success', 'Penyakit berhasil diperbarui!');
     }
-    
+
 
     public function destroy($id)
     {
@@ -112,5 +112,4 @@ class PenyakitController extends Controller
 
         return redirect()->route('penyakit.index')->with('success', 'Penyakit berhasil dihapus!');
     }
-
 }

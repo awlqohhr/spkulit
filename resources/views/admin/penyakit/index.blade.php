@@ -62,12 +62,14 @@
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <label for="Gambar_Penyakit">Gambar Penyakit</label>
+                                                        <label for="Gambar_Penyakit">Gambar
+                                                            Penyakit</label>
                                                         <input type="file" class="form-control" id="Gambar_Penyakit"
                                                             name="Gambar_Penyakit" onchange="previewImage(this)">
                                                         <div class="text-center mt-2">
-                                                            <img id="image-preview" class="img-fluid rounded" src="#"
-                                                                alt="Preview" style="display:none; max-width: 300px">
+                                                            <img id="image-preview" class="img-fluid rounded"
+                                                                src="#' . $penyakit->Gambar_Penyakit) }}" alt="Preview"
+                                                                style="max-width: 300px;">
                                                         </div>
                                                     </div>
                                                     <script>
@@ -76,16 +78,12 @@
                                                             var file = input.files[0];
                                                             var reader = new FileReader();
 
-                                                            reader.onloadend = function() {
-                                                                preview.src = reader.result;
-                                                                preview.style.display = 'block';
+                                                            reader.onload = function(e) {
+                                                                preview.src = e.target.result;
                                                             };
 
                                                             if (file) {
                                                                 reader.readAsDataURL(file);
-                                                            } else {
-                                                                preview.src = '';
-                                                                preview.style.display = 'none';
                                                             }
                                                         }
                                                     </script>
@@ -97,8 +95,7 @@
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <label for="Deskripsi_Penyakit">Deskripsi
-                                                            Penyakit</label>
+                                                        <label for="Deskripsi_Penyakit">Deskripsi dan Penanganan</label>
                                                         <textarea class="form-control" id="Deskripsi_Penyakit" name="Deskripsi_Penyakit" rows="4" required></textarea>
                                                     </div>
                                                     <div class="modal-footer">
@@ -121,28 +118,36 @@
                                                 style="auto">
                                                 <thead>
                                                     <tr>
-                                                        <th data-field="no" style="width: 3%">No.</th>
                                                         <th data-field="kode_penyakit" style="width: 10%">Kode Penyakit</th>
                                                         <th data-field="gambar">Gambar Penyakit</th>
                                                         <th data-field="nama_penyakit">Nama Penyakit</th>
-                                                        <th data-field="deskirpsi_penyakit">Deskripsi Penyakit</th>
+                                                        <th data-field="deskirpsi_penyakit">Deskripsi dan Penanganan</th>
                                                         <th data-field="aksi" style="width: 10%">Aksi</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     @foreach ($penyakits as $no => $penyakit)
                                                         <tr>
-                                                            <td>{{ $no + 1 }}</td>
                                                             <td>{{ $penyakit->Kode_Penyakit }}</td>
                                                             <td>
                                                                 @if ($penyakit->Gambar_Penyakit)
-                                                                    <img src="{{ asset('storage/' . $penyakit->Gambar_Penyakit) }}"
+                                                                    <img src="{{ asset('storage/gambar_penyakit/' . $penyakit->Gambar_Penyakit) }}"
                                                                         alt="Gambar Penyakit" style="max-width: 100px;">
                                                                 @else
                                                                     No Image
                                                                 @endif
                                                             <td>{{ $penyakit->Nama_Penyakit }}</td>
-                                                            <td>{{ $penyakit->Deskripsi_Penyakit }}</td>
+                                                            <td
+                                                                style="max-height: 100px; overflow: hidden; line-height: 1.2;">
+                                                                @php
+                                                                    // Split the deskripsi into paragraphs
+                                                                    $paragraphs = explode("\n", $penyakit->Deskripsi_Penyakit);
+                                                                @endphp
+
+                                                                @foreach ($paragraphs as $paragraph)
+                                                                    <p>{{ $paragraph }}</p>
+                                                                @endforeach
+                                                            </td>
                                                             <td class="text-center">
                                                                 <div class="row">
                                                                     <div class="pt-2 col"> <button type="button"
@@ -156,7 +161,6 @@
                                                                             <i class="bi bi-trash2-fill"></i>
                                                                         </button></div>
                                                                 </div>
-
                                                             </td>
                                                         </tr>
 
@@ -205,7 +209,7 @@
                                                                                     <div class="text-center mt-2">
                                                                                         <img id="image-preview"
                                                                                             class="img-fluid rounded"
-                                                                                            src="{{ asset('storage/' . $penyakit->Gambar_Penyakit) }}"
+                                                                                            src="{{ asset('storage/gambar_penyakit/' . $penyakit->Gambar_Penyakit) }}"
                                                                                             alt="Preview"
                                                                                             style="max-width: 300px;">
                                                                                     </div>
@@ -239,7 +243,8 @@
                                                                                     <label
                                                                                         for="Deskripsi_Penyakit">Deskripsi
                                                                                         Penyakit</label>
-                                                                                    <textarea class="form-control" id="Deskripsi_Penyakit" name="Deskripsi_Penyakit" rows="4" required>{{ $penyakit->Deskripsi_Penyakit }}</textarea>
+                                                                                    <textarea class="form-control" id="Deskripsi_Penyakit" name="Deskripsi_Penyakit" oninput="autoparagraph(this)"
+                                                                                        rows="4" required>{{ $penyakit->Deskripsi_Penyakit }}</textarea>
                                                                                 </div>
                                                                                 <div class="modal-footer">
                                                                                     <button type="button"
@@ -250,6 +255,7 @@
                                                                                         Perubahan</button>
                                                                                 </div>
                                                                             </form>
+
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -309,4 +315,17 @@
     </div>
     <!-- Bootstrap JS and Popper.js -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function autoparagraph(textarea) {
+            // Split the text by line breaks
+            const lines = textarea.value.split('\n');
+
+            // Create paragraphs by wrapping lines with <p> tags
+            const paragraphs = lines.map(line => `<p>${line}</p>`);
+
+            // Join paragraphs and set it as the HTML content of the textarea
+            textarea.innerHTML = paragraphs.join('');
+        }
+    </script>
 @endsection
