@@ -37,7 +37,7 @@
                         <h4>Informasi Penyakit:</h4>
                         @php
                             $aturan = App\Models\Aturan::where('Kode_Penyakit', $diagnosa->Kode_Penyakit)->first();
-                            dd($diagnosa);
+                            // dd($diagnosa);
                         @endphp
 
                         @if ($aturan)
