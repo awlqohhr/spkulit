@@ -126,8 +126,7 @@
                                                                         <!-- Button trigger modal -->
                                                                         <button type="button" class="btn btn-info"
                                                                             data-bs-toggle="modal"
-                                                                            data-bs-target="#aturanshowModal"
-                                                                            data-id="{{ $kodePenyakit }}">
+                                                                            data-bs-target="#aturanshowModal">
                                                                             <i class="bi bi-eye-fill"></i>
                                                                         </button>
                                                                         <button type="button" class="btn btn-warning"

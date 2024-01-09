@@ -29,4 +29,15 @@ class Aturan extends Model
     {
         return $this->belongsTo(Gejala::class, 'Kode_Gejala', 'Kode_Gejala');
     }
+
+
+    public function gejalas()
+    {
+        return $this->hasMany(Gejala::class, 'aturan_id', 'id');
+    }
+
+    public function penyakits()
+    {
+        return $this->hasMany(Penyakit::class, 'aturan_id', 'id');
+    }
 }
